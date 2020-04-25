@@ -1,0 +1,39 @@
+scripts=/home/bartek/.config/i3blocks/scripts
+
+[cpu]
+command=scripts/cpu
+label= 
+interval=4
+
+[cpu-temp]
+command=scripts/temperature
+interval=4
+
+[disk]
+command=scripts/disk
+label=  /
+interval=120
+
+[memory]
+command=scripts/memory
+label= 
+interval=5
+
+[battery]
+command=scripts/battery
+interval=5
+markup=pango
+
+[time]
+command=date +"  %H:%M:%S "
+interval=1
+
+[date]
+command=date +"  %d %b %y "
+interval=1
+
+[nm-vpn]
+command=scripts/vpn
+interval=5
+
+
