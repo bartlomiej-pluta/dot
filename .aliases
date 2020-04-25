@@ -1,0 +1,24 @@
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias cat='bat'
+alias ls='exa'
+alias ping='prettyping --nolegend'
+alias top='htop'
+alias du='ncdu --color dark --r -x'
+alias preview="fzf --preview 'bat --color \"always\" {}'"
+alias vpn='nordvpn'
+alias calc='python -i -c "from math import *"'
+alias gradle='./gradlew'
+
+# NVM lazy loading
+alias nvm='unalias nvm; unalias node; unalias npm; nvm_load; nvm $@'
+alias node='unalias nvm; unalias node; unalias npm; nvm_load; node $@'
+alias npm='unalias nvm; unalias node; unalias npm; nvm_load; npm $@'
+
+
