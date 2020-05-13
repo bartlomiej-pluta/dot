@@ -107,6 +107,10 @@ export EDITOR='vim'
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 source "$HOME/.aliases"
 
+# Enable firing Ntfy notifications on time-consuming processes' end
+eval "$(ntfy shell-integration)"
+export AUTO_NTFY_DONE_IGNORE="vim screen meld git lua python"
+
 # NVM lazy loading
 nvm_load () { 
 	export NVM_DIR="$HOME/.nvm"
