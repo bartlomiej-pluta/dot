@@ -16,7 +16,7 @@ check-wallpaper-in-blacklist() {
 }
 
 change-wallpaper() {
-	wget "https://source.unsplash.com/random/${RESOLUTION}" -O "$DIR/wallpaper.new" &> /dev/null
+	wget "https://source.unsplash.com/random/${RESOLUTION}" -o /dev/null -O "$DIR/wallpaper.new" &> /dev/null
 	
 	if [ $? -eq 0 ] ; then
 		rm "$DIR/wallpaper" &> /dev/null
