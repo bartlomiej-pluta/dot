@@ -1,0 +1,49 @@
+#!/bin/bash
+
+decode() {
+	dir=$(mktemp -d -t "qr-serializer-XXXXXXXXXX")
+	chunks_dir="$dir/chunks"
+	base64="$dir/base64"
+	qr_dir="$1"
+	
+	mkdir "$chunks_dir"
+	
+	# Decode QR codes
+	for qr in $(ls -v "$qr_dir") ; do
+		(cd "$qr_dir" && zbarimg --raw -q "$qr" | head -c -1 > "$chunks_dir/${qr%.*i}")
+	done
+	
+	# Concatenate each file to one
+	# cat (...) > base64
+	(cd "$chunks_dir" && cat $(ls -v "$chunks_dir") > "$base64")
+	
+	# Decode Base64
+	cat "$base64" | base64 -d > "$2"
+	
+	rm -rf "$dir"
+}
+
+help() {
+	cat <<EOF
+Usage: $(basename $0) QR_IMAGES_DIRECTORY OUTPUT_FILE
+
+This tool allows you to restore original file encoded
+with base64 and serialized to QR code.
+All you need is to provide a directory with QR codes
+with filenames that guarantee correct order with
+'ls -v' command, which is used by this script.
+
+This tool is complementary to 'paper_store_*' scripts.
+
+Arguments:
+  QR_IMAGE_DIRECTORY - the source of ordered QR codes
+  OUTPUT_FILE        - the file supposed to be created
+EOF
+}
+
+if [ "$#" -ne 2 ] ; then
+	help
+	exit 1
+fi
+
+decode "$1" "$2"
