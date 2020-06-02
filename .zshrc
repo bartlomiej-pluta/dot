@@ -2,6 +2,11 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.local/scripts:$HOME/.local/bin:$PATH
 
+# Append RubyGem's executables to PATH if RubyGem is installed
+if [ "$(command -v gem)" ] ; then
+	export PATH=$PATH:$(ruby -e 'puts Gem.user_dir')/bin
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
