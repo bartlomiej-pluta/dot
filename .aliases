@@ -15,6 +15,12 @@ alias preview="fzf --preview 'bat --color \"always\" {}'"
 alias vpn='nordvpn'
 alias calc='python -i -c "from math import *"'
 alias gradle='./gradlew'
+alias ..2='cd ../../'
+alias ..3='cd ../../../'
+alias ..4='cd ../../../../'
+alias ..5='cd ../../../../../'
+alias ..6='cd ../../../../../../'
+alias ..7='cd ../../../../../../../'
 
 # NVM lazy loading
 alias nvm='unalias nvm; unalias node; unalias npm; nvm_load; nvm $@'
