@@ -21,6 +21,10 @@ alias ..4='cd ../../../../'
 alias ..5='cd ../../../../../'
 alias ..6='cd ../../../../../../'
 alias ..7='cd ../../../../../../../'
+alias err='echo >&2'
+alias del='trash'
+alias res='trash-restore'
+alias rm='err This command has been disabled. Use following command instead: del '
 
 # NVM lazy loading
 alias nvm='unalias nvm; unalias node; unalias npm; nvm_load; nvm $@'
