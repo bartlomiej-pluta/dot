@@ -33,7 +33,7 @@ command=date +"  %d %b %y "
 interval=1
 
 [nm-vpn]
-command=scripts/vpn
+command=nmcli -t connection show --active | awk -f scripts/vpn
 interval=5
 
 

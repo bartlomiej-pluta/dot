@@ -1,3 +1,19 @@
-nmcli -t connection show --active | awk -F ':' '
-/tun0/{vpn="ON"} /vpn/{name=$1}
-END{if(vpn) printf(" VPN \n\n%s\n", "#00FF00")}'
+#!/usr/bin/awk -f 
+
+BEGIN {
+  FS = ":"
+}
+
+/tun0/ { 
+  vpn = "ON" 
+}
+
+/vpn/  { 
+  vpn = "ON"
+  name = " (" $1 ")"
+}
+
+END {
+  if(vpn) printf("  VPN%s \n\n%s\n", name, "#00FF00")
+}
+
