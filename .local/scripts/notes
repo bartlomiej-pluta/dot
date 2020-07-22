@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+dir="$HOME/Notes"
+
+#/ Usage: notes [--sync|--help]
+#/ Description: Simple notes manager 
+#/ Options:
+#/   -h, --help: Display this help message
+#/   -s, --sync: Pulls notes from origin and pushes local ones
+#/   -m, --message: Overrides the default commit message with custom one
+usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*--help" > /dev/null && usage
+
+readonly LOG_FILE="/tmp/$(basename "$0").log"
+info()    { echo "[INFO]    $*" | tee -a "$LOG_FILE" >&2 ; }
+warning() { echo "[WARNING] $*" | tee -a "$LOG_FILE" >&2 ; }
+error()   { echo "[ERROR]   $*" | tee -a "$LOG_FILE" >&2 ; }
+fatal()   { echo "[FATAL]   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
+
+cleanup() {
+    # Remove temporary files
+    # Restart services
+    # ...
+    exit 0
+}
+
+sync() { 
+    cd "$dir"
+    info "Pulling notes..."
+    git pull --rebase -q
+    status=$(git status --porcelain)
+    
+    if [ ${#1} -ne 0 ] ; then
+	msg="$1"
+    else
+	msg="$status"
+    fi
+    
+    if [ ${#status} -ne 0 ] ; then
+	git add --all
+	git commit -m "$msg"
+
+	info "Updating notes"
+	info "$status"
+	git push -q
+    fi
+}
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+    trap cleanup EXIT
+
+    if (( ! $# )) ; then usage; fi
+
+    run_sync=0
+    custom_message=""
+
+    while (( $# )) ; do
+	case "$1" in
+	   -h|--help) usage ;;
+	   -s|--sync) run_sync=1 ;;
+	   -m|--message) custom_message="$2"; shift ;;
+	   *) usage ;;
+	esac
+	shift
+    done
+
+
+    if (( $run_sync )) ; then sync "$custom_message"; fi
+fi
