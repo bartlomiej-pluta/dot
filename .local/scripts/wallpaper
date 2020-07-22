@@ -1,29 +1,54 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
+export DISPLAY=:0
 RESOLUTION=$(xdpyinfo | awk '/dimensions/{print $2}')
-
 DIR=~/.wallpapers
 
-mkdir -p "$DIR"
+#/ Usage: wallpaper COMMAND
+#/
+#/ Unsplash wallpaper management tool.
+#/
+#/ Available commands:
+#/   * change - draw new wallpaper from unsplash.com
+#/   * block - add current wallpaper to blacklist and immediately draw new wallpaper
+#/   * save - save wallpaper to favourites
+#/   * default - set current wallpaper to default
+#/   * help - display this help
+usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*--help" > /dev/null && usage
 
+readonly LOG_FILE="/tmp/$(basename "$0").log"
+info()    { echo "[INFO]    $*" | tee -a "$LOG_FILE" >&2 ; }
+warning() { echo "[WARNING] $*" | tee -a "$LOG_FILE" >&2 ; }
+error()   { echo "[ERROR]   $*" | tee -a "$LOG_FILE" >&2 ; }
+fatal()   { echo "[FATAL]   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
+
+
+cleanup() {
+	# Remove temporary files
+	# Restart services
+	# ...
+	exit
+}
 
 check-wallpaper-in-blacklist() {
-	cat "$DIR/blacklist" | grep "$(cat "$DIR/wallpaper" | md5sum | cut -d ' ' -f1)"	
-	if [ $? -eq 0 ] ; then
-		echo "Wallpaper from blacklist has been drawn. Redrawing new wallpaper..."
+	hash=$(cat "$DIR/wallpaper" | md5sum | cut -d ' ' -f1)
+	
+	if cat "$DIR/blacklist" | grep "$hash" ; then
+		info "Wallpaper from blacklist has been drawn. Redrawing new wallpaper..."
 		change-wallpaper
 	fi
 }
 
 change-wallpaper() {
-	wget "https://source.unsplash.com/random/${RESOLUTION}" --no-check-certificate -o /dev/null -O "$DIR/wallpaper.new" &> /dev/null
-	
-	if [ $? -eq 0 ] ; then
+	if wget "https://source.unsplash.com/random/${RESOLUTION}" --no-check-certificate -o /dev/null -O "$DIR/wallpaper.new" &> /dev/null ; then
 		rm "$DIR/wallpaper" &> /dev/null
 		mv "$DIR/wallpaper.new" "$DIR/wallpaper"
 		check-wallpaper-in-blacklist
 		update-wallpaper
-	else
+	else 
 		set-default
 	fi
 }
@@ -31,7 +56,7 @@ change-wallpaper() {
 block-wallpaper() {
 	echo "# $(date)" >> "$DIR/blacklist"
 	md5sum "$DIR/wallpaper" >> "$DIR/blacklist"
-	echo "Current wallpaper has been add to blacklist"
+	info "Current wallpaper has been add to blacklist"
 	change-wallpaper
 }
 
@@ -39,39 +64,33 @@ save-wallpaper() {
 	mkdir -p "$DIR/favourites"
 	DEST="$DIR/favourites/$(cat "$DIR/wallpaper" | md5sum | cut -d ' ' -f1)"
 	cp "$DIR/wallpaper" "$DEST"
-	echo "Wallpaper saved as $DEST"
+	info "Wallpaper saved as $DEST"
 }
 
 set-default() {
 	cp "$DIR/default" "$DIR/wallpaper"
 	update-wallpaper
+	info "Wallpaper set to default"
 }
 
 update-wallpaper() {
 	DISPLAY=:0.0 nitrogen --set-zoom-fill "$DIR/wallpaper"
+	info "Wallpaper updated"
 }
 
-display-help() {
-	cat <<EOF >&2
-Usage: $(basename $0) COMMAND
 
-Unsplash wallpaper management tool.
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+	trap cleanup EXIT
 
-Available commands:
-  * change - draw new wallpaper from unsplash.com
-  * block - add current wallpaper to blacklist and immediately draw new wallpaper
-  * save - save wallpaper to favourites
-  * default - set current wallpaper to default
-  * help - display this help
-EOF
-}
-
-case $1 in
-	change) change-wallpaper ;;
-	block) block-wallpaper ;;
-	save) save-wallpaper ;;
-	default) set-default ;;
-	help) display-help ;;
-	*) display-help ;;
-esac
+	cmd=${1:-"help"}
+	mkdir -p "$DIR"
+	case $cmd in
+		change) change-wallpaper ;;
+		block) block-wallpaper ;;
+		save) save-wallpaper ;;
+		default) set-default ;;
+		help) usage ;;
+		*) usage ;;
+	esac
+fi
 

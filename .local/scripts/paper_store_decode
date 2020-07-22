@@ -1,4 +1,36 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+#/ Usage: paper_store_decode QR_IMAGES_DIRECTORY OUTPUT_FILE
+#/
+#/ This tool allows you to restore original file encoded
+#/ with base64 and serialized to QR code.
+#/ All you need is to provide a directory with QR codes
+#/ with filenames that guarantee correct order with
+#/ 'ls -v' command, which is used by this script.
+#/
+#/ This tool is complementary to 'paper_store_*' scripts.
+#/
+#/ Arguments:
+#/   QR_IMAGE_DIRECTORY - the source of ordered QR codes
+#/   OUTPUT_FILE        - the file supposed to be created
+usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*--help" > /dev/null && usage
+
+readonly LOG_FILE="/tmp/$(basename "$0").log"
+info()    { echo "[INFO]    $*" | tee -a "$LOG_FILE" >&2 ; }
+warning() { echo "[WARNING] $*" | tee -a "$LOG_FILE" >&2 ; }
+error()   { echo "[ERROR]   $*" | tee -a "$LOG_FILE" >&2 ; }
+fatal()   { echo "[FATAL]   $*" | tee -a "$LOG_FILE" >&2 ; exit 1 ; }
+
+cleanup() {
+    # Remove temporary files
+    # Restart services
+    # ...
+		exit
+}
 
 decode() {
 	dir=$(mktemp -d -t "qr-serializer-XXXXXXXXXX")
@@ -23,27 +55,13 @@ decode() {
 	rm -rf "$dir"
 }
 
-help() {
-	cat <<EOF
-Usage: $(basename $0) QR_IMAGES_DIRECTORY OUTPUT_FILE
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+    trap cleanup EXIT
+    if [ "$#" -ne 2 ] ; then
+			usage
+			exit 1
+		fi
 
-This tool allows you to restore original file encoded
-with base64 and serialized to QR code.
-All you need is to provide a directory with QR codes
-with filenames that guarantee correct order with
-'ls -v' command, which is used by this script.
-
-This tool is complementary to 'paper_store_*' scripts.
-
-Arguments:
-  QR_IMAGE_DIRECTORY - the source of ordered QR codes
-  OUTPUT_FILE        - the file supposed to be created
-EOF
-}
-
-if [ "$#" -ne 2 ] ; then
-	help
-	exit 1
+		decode "$1" "$2"
 fi
 
-decode "$1" "$2"
