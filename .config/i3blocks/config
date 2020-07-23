@@ -38,6 +38,8 @@ command=date +"  %H:%M:%S "
 interval=1
 
 [date]
-command=date +"  %d %b %y "
+command=scripts/date
 interval=1
+LABEL=  
+
 
