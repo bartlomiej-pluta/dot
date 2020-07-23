@@ -1,5 +1,14 @@
 scripts=/home/bartek/.config/i3blocks/scripts
 
+[nm-vpn]
+command=nmcli -t connection show --active | awk -f scripts/vpn
+interval=10
+
+[internet]
+command=scripts/ip
+label= 
+interval=10
+
 [cpu]
 command=scripts/cpu
 label= 
@@ -31,9 +40,4 @@ interval=1
 [date]
 command=date +"  %d %b %y "
 interval=1
-
-[nm-vpn]
-command=nmcli -t connection show --active | awk -f scripts/vpn
-interval=5
-
 
