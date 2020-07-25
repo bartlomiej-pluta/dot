@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+#/ Usage: shellscript OPTION
+#/ Simple shell scripts manager
+#/ Options:
+#/  -n NAME:  Creates new shellscript from template
+#/  -h:       Display this help message
+
+set -euo pipefail
+IFS=$'\n\t'
+
+usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*--help" > /dev/null && usage
+
+readonly logfile="/tmp/$(basename "$0").log"
+info()    { echo "[INFO]    $*" | tee -a "$logfile" >&2 ; }
+warning() { echo "[WARNING] $*" | tee -a "$logfile" >&2 ; }
+error()   { echo "[ERROR]   $*" | tee -a "$logfile" >&2 ; }
+fatal()   { echo "[FATAL]   $*" | tee -a "$logfile" >&2 ; exit 1 ; }
+
+scripts_dir=$(dirname "$0")
+template="$scripts_dir/.template.sh"
+
+cleanup() {
+  # Remove temporary files
+  # Restart services
+  # ...
+	exit
+}
+
+new_shellscript() {
+  scriptname=${1:-}
+  [ -z "$scriptname" ] && fatal "Script name must not be empty"
+  scriptfile="$scripts_dir/$scriptname"
+  [ -e "$scriptname" ] && fatal "Script with name of '$scriptname' already exists"
+  cp "$template" "$scriptfile"
+  chmod +x "$scriptfile"
+  info "Opening VS Code..."
+  code "$scripts_dir" "$scriptfile"
+}
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+  trap cleanup EXIT
+
+  [ "$#" -eq 0 ] && usage
+
+  while getopts ":n:" arg ; do
+    case "$arg" in
+      n) new_shellscript "$OPTARG" ;;
+      *) usage ;;
+    esac
+
+    shift $((OPTIND-1))
+  done
+fi

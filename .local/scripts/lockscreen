@@ -1,0 +1,3 @@
+#!/bin/bash
+
+betterlockscreen -l pixel -t "$(fortune -sn 30)"

@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-set -euo pipefail
-IFS=$'\n\t'
-
 
 #/ Usage: paper_store_decode QR_IMAGES_DIRECTORY OUTPUT_FILE
 #/
@@ -16,6 +13,10 @@ IFS=$'\n\t'
 #/ Arguments:
 #/   QR_IMAGE_DIRECTORY - the source of ordered QR codes
 #/   OUTPUT_FILE        - the file supposed to be created
+
+set -euo pipefail
+IFS=$'\n\t'
+
 usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
 expr "$*" : ".*--help" > /dev/null && usage
 

@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
-set -euo pipefail
-IFS=$'\n\t'
-
-export DISPLAY=:0
-RESOLUTION=$(xdpyinfo | awk '/dimensions/{print $2}')
-DIR=~/.wallpapers
 
 #/ Usage: wallpaper COMMAND
 #/
@@ -16,6 +10,14 @@ DIR=~/.wallpapers
 #/   * save - save wallpaper to favourites
 #/   * default - set current wallpaper to default
 #/   * help - display this help
+
+set -euo pipefail
+IFS=$'\n\t'
+
+export DISPLAY=:0
+RESOLUTION=$(xdpyinfo | awk '/dimensions/{print $2}')
+DIR=~/.wallpapers
+
 usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
 expr "$*" : ".*--help" > /dev/null && usage
 
