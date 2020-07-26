@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+#/ Usage: paperstore COMMAND [OPTIONS] ARGUMENTS
+#/ Script aimed on encoding files as QR codes and decoding them right back
+#/ 
+#/ Examples:
+#/   # Encodes myfile.txt to myfile.txt.pdf file
+#/   paperstore encode myfile.txt
+#/
+#/   # Encodes myfile.txt to myfile.txt.pdf file with dense mode
+#/   paperstore encode -d myfile.txt
+#/
+#/   # Decodes QR codes placed in scan_dir folder to myfile.txt
+#/   paperstore decode scan_dir myfile.txt
+#/
+#/ Commands:
+#/   e, encode: Encode file with sparse (default) or dense (with -d) mode
+#/              This option consumes one argument, which is the name of file
+#/              intended to be encoded.
+#/              See 'Encoded options' for available options.
+#/   d, decode: Decode file using QR codes saved as images in particular directory (the first argument)
+#/              and saves the result as given filename (the second argument).
+#/              This command requires QR codes to be ordered so that the `ls -v` command
+#/              displays them in correct order.
+#/
+#/ Encode options:
+#/   -d: Encodes the file using dense mode, which gets rid of base64 comment and produces fewer pages
+#/       of encoded PDF file.
+#/ General options:
+#/   --help, -h: Display this help message
+
+set -euo pipefail
+IFS=$'\n\t'
+
+usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*--help" > /dev/null && usage
+
+readonly logfile="/tmp/$(basename "$0").log"
+info()    { echo "[INFO]    $*" | tee -a "$logfile" >&2 ; }
+warning() { echo "[WARNING] $*" | tee -a "$logfile" >&2 ; }
+error()   { echo "[ERROR]   $*" | tee -a "$logfile" >&2 ; }
+fatal()   { echo "[FATAL]   $*" | tee -a "$logfile" >&2 ; exit 1 ; }
+
+cleanup() {
+  # Remove temporary files
+  # Restart services
+  # ...
+	exit
+}
+
+encode() {  
+  while getopts ":d" arg ; do
+    case "$arg" in
+      d) dense=1; shift ;;
+      *) ;;
+    esac
+  done
+
+  if [ -v dense ] ; then
+    paper_store_dense "$@"
+  else
+    paper_store_sparse "$@"
+  fi
+}
+
+decode() {
+  paper_store_decode "$@"
+}
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+  trap cleanup EXIT
+  # Script goes here
+  # ...
+
+  [ "$#" -eq 0 ] && usage
+
+  cmd=${1:-}
+  shift
+
+  case "$cmd" in
+    e|encode) encode "$@" ;;
+    d|decode) decode "$@" ;;
+    -h|--help) usage ;;
+  esac
+fi
