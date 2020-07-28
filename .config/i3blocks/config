@@ -9,6 +9,14 @@ command=scripts/ip
 label= 
 interval=10
 
+[bandwidth]
+command=scripts/bandwidth
+interval=5
+#INTERFACE=wlp3s0
+INLABEL= 
+OUTLABEL= 
+#TREAT_UNKNOWN_AS_UP=0
+
 [cpu]
 command=scripts/cpu
 label= 

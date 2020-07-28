@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+ip=$(curl -s ifconfig.me)
+
+if [[ $? -ne 0 ]] ; then
+  echo " -- "
+  exit 33;
+fi
+
+echo " $ip "
+
+
