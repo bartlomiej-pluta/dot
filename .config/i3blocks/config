@@ -45,13 +45,8 @@ command=scripts/battery
 interval=5
 markup=pango
 
-[time]
-command=date +"  %H:%M:%S "
-interval=1
-
 [date]
 command=scripts/date
 interval=1
-LABEL=  
 
 
