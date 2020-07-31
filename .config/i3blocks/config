@@ -19,6 +19,7 @@ OUTLABEL=
 
 [nvidia]
 command=scripts/nvidia
+label= GPU 
 interval=4
 
 [cpu]
@@ -30,15 +31,15 @@ interval=4
 command=scripts/temperature
 interval=4
 
-[disk]
-command=scripts/disk
-label=  /
-interval=120
-
 [memory]
 command=scripts/memory
 label= 
 interval=5
+
+[disk]
+command=scripts/disk
+label= 
+interval=120
 
 [battery]
 command=scripts/battery

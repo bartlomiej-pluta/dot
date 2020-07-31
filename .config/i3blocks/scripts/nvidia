@@ -30,8 +30,8 @@ elif (( $temp >= $temp_warning_thresh )) ; then
   warning=1
 fi
 
-echo " GPU ${temp_icon} ${temp}°C  ${mem_free}/${mem_total} "
-echo " GPU ${temp_icon} ${temp}°C  ${mem_free}/${mem_total} "
+echo " ${temp_icon} ${temp}°C   ${mem_free}/${mem_total} "
+echo " ${temp_icon} ${temp}°C   ${mem_free}/${mem_total} "
 
 if [[ -n $critic ]] ; then
   echo "#FF0000"
