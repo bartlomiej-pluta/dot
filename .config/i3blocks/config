@@ -17,6 +17,10 @@ INLABEL=
 OUTLABEL= 
 #TREAT_UNKNOWN_AS_UP=0
 
+[nvidia]
+command=scripts/nvidia
+interval=4
+
 [cpu]
 command=scripts/cpu
 label= 

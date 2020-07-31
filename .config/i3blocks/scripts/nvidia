@@ -1,0 +1,41 @@
+#!/bin/bash
+
+temp_critic_thresh=90
+temp_warning_thresh=70
+
+{ read -r mem_free; read -r mem_total; read -r temp; } <<-EOF
+$(nvidia-smi --query-gpu=memory.used,memory.total,temperature.gpu --format=csv,noheader | awk -F, '{
+gsub(" ", "", $0)
+gsub("iB", "", $0)
+print $1
+print $2
+print $3
+}')
+EOF
+
+temp_icon="";
+if (( $temp >= 80 )) ; then
+	temp_icon="";
+elif (( $temp >= 70 )) ; then
+  temp_icon="";
+elif (( $temp >= 60 )) ; then
+  temp_icon="";
+elif (( $temp >= 50 )) ; then
+  temp_icon="";
+fi
+
+if (( $temp >= $temp_critic_thresh )) ; then
+  critic=1
+elif (( $temp >= $temp_warning_thresh )) ; then
+  warning=1
+fi
+
+echo " GPU ${temp_icon} ${temp}°C  ${mem_free}/${mem_total} "
+echo " GPU ${temp_icon} ${temp}°C  ${mem_free}/${mem_total} "
+
+if [[ -n $critic ]] ; then
+  echo "#FF0000"
+  exit 33
+elif [[ -n $warning ]] ; then
+  echo "#FFFC00"
+fi
