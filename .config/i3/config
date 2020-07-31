@@ -27,7 +27,8 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminal -e zsh -c tmux -fn 'xft:dejavusansmono:size=9'
+#bindsym $mod+Return exec terminal -e zsh -c tmux -fn 'xft:dejavusansmono:size=9'
+bindsym $mod+Return exec xfce4-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
