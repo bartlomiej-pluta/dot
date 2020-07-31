@@ -275,6 +275,9 @@ mode "resize" {
 # Lock screen
 bindsym $mod+9 exec --no-startup-id betterlockscreen -l pixel -t "$(fortune -sn 30)"
 
+# Dropdown terminal
+bindsym F1 exec "xfce4-terminal --drop-down
+
 # Autostart applications
 exec --no-startup-id pcmanfm -d
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
