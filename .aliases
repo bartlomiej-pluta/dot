@@ -31,4 +31,7 @@ alias nvm='unalias nvm; unalias node; unalias npm; nvm_load; nvm $@'
 alias node='unalias nvm; unalias node; unalias npm; nvm_load; node $@'
 alias npm='unalias nvm; unalias node; unalias npm; nvm_load; npm $@'
 
+# Ruby Gems lazy loading
+alias gem='unalias gem; { [ -z ${GEM_HOME} ] && gem_load }; gem "$@"'
+
 
