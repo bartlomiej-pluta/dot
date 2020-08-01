@@ -21,6 +21,11 @@ ZSH_THEME="bartek"
 # Disable beeping
 setopt nobeep
 
+# Directory stack
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -109,6 +114,11 @@ source "$HOME/.aliases"
 
 # Set additional ZSH functions
 source "$HOME/.functions"
+
+# Load custom sources
+for file in "$HOME"/.local/zsh/* ; do
+	source "$file"
+done
 
 # Enable firing Ntfy notifications on time-consuming processes' end
 # eval "$(ntfy shell-integration)"

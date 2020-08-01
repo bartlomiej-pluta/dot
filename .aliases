@@ -26,6 +26,10 @@ alias del='trash'
 alias res='trash-restore'
 alias rm='err This command has been disabled. Use following command instead: del '
 
+# Directory stack
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd -${index}"; unset index
+
 # NVM lazy loading
 alias nvm='unalias nvm; unalias node; unalias npm; nvm_load; nvm $@'
 alias node='unalias nvm; unalias node; unalias npm; nvm_load; node $@'
