@@ -7,6 +7,12 @@ setopt NO_BEEP
 ## Change directory without cd
 setopt AUTO_CD
 
+## History
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_REDUCE_BLANKS
+
 ## Enable spell autocorrection
 setopt CORRECT
 setopt CORRECT_ALL
@@ -35,6 +41,7 @@ autoload -Uz lazy_loading.zsh; lazy_loading.zsh
 # Aliases and functions
 source "$ZDOTDIR/aliases"
 source "$ZDOTDIR/functions"
+
 
 # Plugins
 source /usr/share/fzf/key-bindings.zsh
