@@ -18,10 +18,12 @@ setopt PUSHD_SILENT
 
 # Sources
 ## Update fpath
-fpath=("$ZDOTDIR/sources" $fpath)
+fpath=("$ZDOTDIR/sources" "$ZDOTDIR/prompts" $fpath)
 
 ## Prompt
-autoload -Uz prompt.zsh; prompt.zsh
+#autoload -Uz prompt.zsh; prompt.zsh
+autoload -Uz promptinit; promptinit
+prompt bartek
 
 ## Autocompletion
 autoload -Uz compinit; compinit

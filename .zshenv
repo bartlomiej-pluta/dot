@@ -3,7 +3,9 @@
 export TERM="rxvt-256color"
 
 # Path
-export PATH=$HOME/.local/scripts:$HOME/.local/bin:$PATH
+typeset -U PATH path
+path=("$HOME/.local/scripts" "$HOME/.local/bin" "$path[@]")
+export PATH
 
 # Language
 # export LANG=en_US.UTF-8
