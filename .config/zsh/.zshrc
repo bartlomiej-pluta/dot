@@ -42,6 +42,8 @@ autoload -Uz lazy_loading.zsh; lazy_loading.zsh
 source "$ZDOTDIR/aliases"
 source "$ZDOTDIR/functions"
 
+# Key binding
+source "$ZDOTDIR/keybinding"
 
 # Plugins
 source /usr/share/fzf/key-bindings.zsh
