@@ -51,6 +51,7 @@ plugins=(
    "/usr/share/fzf/completion.zsh"
    "$ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
    "$ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+   "$ZDOTDIR/plugins/yadm/yadm.zsh"
    "$ZDOTDIR/plugins/git/git.zsh"
    "$ZDOTDIR/plugins/bd/bd.zsh"
 )
