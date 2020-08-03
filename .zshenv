@@ -25,8 +25,8 @@ export SAVEHIST=10000
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#444444"
 
 # Editor
-export EDITOR="vim"
-export VISUAL="vim"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # SDKMAN!
 export SDKMAN_DIR="$HOME/.sdkman"
