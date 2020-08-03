@@ -40,8 +40,8 @@ git_info() {
 prompt_bartek_setup() {  
   add-zsh-hook precmd prompt_bartek_precmd
   sign='%(?.%F{blue}.%F{red})λ%f'
-  RPS1='%F{green}%*%f'
-  PS1=$'%F{green}%~ %F{yellow}$(git_info)$sign '
+  PS1=$'%F{green}%1~ %F{yellow}$(git_info)$sign '
+  RPS1='%F{green}%*%f %F{blue}@%F{yellow}%m%f '
 }
 
 prompt_bartek_setup $@
