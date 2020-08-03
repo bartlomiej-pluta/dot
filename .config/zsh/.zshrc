@@ -46,12 +46,17 @@ source "$ZDOTDIR/functions"
 source "$ZDOTDIR/keybinding"
 
 # Plugins
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
-source "$ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$ZDOTDIR/plugins/git/git.zsh"
-source "$ZDOTDIR/plugins/bd/bd.zsh"
+plugins=(
+   "/usr/share/fzf/key-bindings.zsh"
+   "/usr/share/fzf/completion.zsh"
+   "$ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+   "$ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+   "$ZDOTDIR/plugins/git/git.zsh"
+   "$ZDOTDIR/plugins/bd/bd.zsh"
+)
+
+## Load automatically plugins
+for plugin in $plugins; do [[ -s "$plugin" ]] && source "$plugin"; done
 
 
 # SDKMAN! (this must be at the end of the file for SDKMAN to work)
