@@ -28,7 +28,7 @@ floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec terminal -e zsh -c tmux -fn 'xft:dejavusansmono:size=9'
-bindsym $mod+Return exec xfce4-terminal
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -63,7 +63,7 @@ bindsym $mod+Ctrl+m exec pavucontrol
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F1 exec pcmanfm
 bindsym $mod+Shift+F1 exec gksu pcmanfm
-bindsym $mod+F2 exec urxvt -e ranger -r ~/.config/ranger
+bindsym $mod+F2 exec kitty -o shell='ranger -r ~/.config/ranger'
 #bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
@@ -216,6 +216,7 @@ for_window [class="Skype"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
+for_window [class="kitty"] border none
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -277,7 +278,9 @@ mode "resize" {
 bindsym $mod+9 exec --no-startup-id betterlockscreen -l pixel -t "$(fortune -sn 30)"
 
 # Dropdown terminal
-bindsym F1 exec "xfce4-terminal --drop-down
+exec_always --no-startup-id kitti3 -p top -s 1 1 -- -o background_opacity=0.7
+bindsym F1 nop kitti3
+
 
 # Autostart applications
 exec --no-startup-id pcmanfm -d
@@ -329,7 +332,7 @@ set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-	i3bar_command i3bar
+	i3bar_command i3bar -t
 	status_command i3blocks
 	position top
 
@@ -339,21 +342,22 @@ bar {
 
 	bindsym button4 nop
 	bindsym button5 nop
-#   font xft:URWGothic-Book 11
-	font pango:DejaVu Sans Mono, Awesome 9
+#   font xft:URWGothic-Book 112
+	font pango:DejaVu Sans Mono, Awesome 9.3
 	strip_workspace_numbers yes
 
     colors {
-        background #222D31
+        #background #222D31        
+        background #00000000
         statusline #F9FAF9
-        separator  #454947
+        separator  #FFFFFF55
 
 #                      border  backgr. text
-        focused_workspace  #F9FAF9 #16a085 #292F34
-        active_workspace   #595B5B #353836 #FDF6E3
-        inactive_workspace #595B5B #222D31 #EEE8D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
+        focused_workspace  #00000000 #FFFFFF $term_color9
+        active_workspace   #00000000 #00000000 #FDF6E3
+        inactive_workspace #00000000 #00000000 #EEE8D5
+        binding_mode       #00000000 #00000000 #F9FAF9
+        urgent_workspace   #00000000 $term_color12 #FFFFFF
     }
 }
 
@@ -426,4 +430,3 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-

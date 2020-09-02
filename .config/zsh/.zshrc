@@ -62,3 +62,5 @@ for plugin in $plugins; do [[ -s "$plugin" ]] && source "$plugin"; done
 
 # SDKMAN! (this must be at the end of the file for SDKMAN to work)
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
+
+(/usr/bin/cat ~/.cache/wal/sequences &)
