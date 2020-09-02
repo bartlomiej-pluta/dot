@@ -6,8 +6,8 @@ prompt_bartek_precmd() {
   autoload -Uz vcs_info 
   vcs_info  
   zstyle ':vcs_info:*'                  enable            git
-  zstyle ':vcs_info:git:*'              stagedstr         "%F{green}•%f"
-  zstyle ':vcs_info:git:*'              unstagedstr       "%F{magenta}•%f"
+  zstyle ':vcs_info:git:*'              stagedstr         "%F{green}+%f"
+  zstyle ':vcs_info:git:*'              unstagedstr       "%F{magenta}*%f"
   zstyle ':vcs_info:git*+set-message:*' hooks             git-misc
   zstyle ':vcs_info:git:*'              check-for-changes true
   zstyle ':vcs_info:git:*'              formats           '%b%c%u%m%a'
@@ -29,7 +29,7 @@ prompt_bartek_precmd() {
 
   if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && git status --porcelain | grep -m 1 '^??' &>/dev/null
   then
-    hook_com[misc]+='%F{white}•%f'
+    hook_com[misc]+='%F{white}?%f'
   fi
 }
 
@@ -39,7 +39,7 @@ git_info() {
 
 prompt_bartek_setup() {  
   add-zsh-hook precmd prompt_bartek_precmd
-  sign='%(?.%F{blue}.%F{red})λ%f'
+  sign='%(?.%F{blue}λ%f.%F{red}!%f)'
   PS1=$'%F{green}%1~ %F{yellow}$(git_info)$sign '
   RPS1='%F{green}%*%f %F{blue}@%F{yellow}%m%f '
 }
