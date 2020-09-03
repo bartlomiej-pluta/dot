@@ -13,10 +13,6 @@ setopt APPEND_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
 
-## Enable spell autocorrection
-setopt CORRECT
-setopt CORRECT_ALL
-
 ## Directory stack
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
