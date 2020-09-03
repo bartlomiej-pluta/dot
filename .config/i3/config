@@ -329,36 +329,8 @@ set_from_resource $term_color13    color13
 set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
-	i3bar_command i3bar -t
-	status_command i3blocks
-	position top
-
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
-#	tray_output eDP1
-
-	bindsym button4 nop
-	bindsym button5 nop
-#   font xft:URWGothic-Book 112
-	font pango:DejaVu Sans Mono, Awesome 9.3
-	strip_workspace_numbers yes
-
-    colors {
-        #background #222D31        
-        background #00000000
-        statusline #F9FAF9
-        separator  #FFFFFF55
-
-#                      border  backgr. text
-        focused_workspace  #00000000 #FFFFFF $term_color9
-        active_workspace   #00000000 #00000000 #FDF6E3
-        inactive_workspace #00000000 #00000000 #EEE8D5
-        binding_mode       #00000000 #00000000 #F9FAF9
-        urgent_workspace   #00000000 $term_color12 #FFFFFF
-    }
-}
+# Polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
