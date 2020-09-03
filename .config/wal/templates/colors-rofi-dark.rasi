@@ -1,0 +1,9 @@
+* {{
+   accent:           {color1};
+   background:       {background};
+   background-focus: {foreground};
+   foreground:       {foreground};
+   foreground-list:  @foreground;
+   on:               {color1};
+   off:              {foreground};
+}}
