@@ -1,12 +1,16 @@
 #!/bin/zsh
 
 # Home End PgUp PgDown Del Ins
-bindkey "^[[1~" beginning-of-line
-bindkey "^[[4~" end-of-line
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
 bindkey "^[[5~" beginning-of-history
 bindkey "^[[6~" end-of-history
 bindkey "^[[3~" delete-char
 bindkey "^[[2~" overwrite-mode
+
+# Ctrl+A Ctrl+E
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
 
 # Ctrl+Left Ctrl+Right
 bindkey "^[[1;5C" forward-word
