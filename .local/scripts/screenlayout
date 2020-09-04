@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+#/ Usage: screenlayout COMMAND [ARGS]
+#/ Description: Easy script for controlling xrandr layouts
+#/ Commands:
+#/   set LAYOUT - execute ~/.screenlayout/{LAYOUT}.sh file which sets layout
+#/   list       - print all available layouts located in ~/.screenlayout directory
+#/   help       - display this help message
+
+set -euo pipefail
+IFS=$'\n\t'
+
+usage() { grep '^#/' "$0" | cut -c4- ; exit 0 ; }
+expr "$*" : ".*--help" > /dev/null && usage
+
+readonly logfile="/tmp/$(basename "$0").log"
+info()    { echo "[INFO]    $*" | tee -a "$logfile" >&2 ; }
+warning() { echo "[WARNING] $*" | tee -a "$logfile" >&2 ; }
+error()   { echo "[ERROR]   $*" | tee -a "$logfile" >&2 ; }
+fatal()   { echo "[FATAL]   $*" | tee -a "$logfile" >&2 ; exit 1 ; }
+
+directory="$HOME/.screenlayout"
+
+cleanup() {
+  # Remove temporary files
+  # Restart services
+  # ...
+	exit
+}
+
+set_layout() {
+  layout=${1:-}
+  path="$directory/${layout}.sh"
+
+  if [[ ! -f "$path" ]] ; then
+    fatal "Layout '$layout' does not exist."
+  fi
+
+  info "Executing ${path}..."
+  sh "$path"
+  info "Restarting i3..."
+  i3-msg restart > /dev/null 2>&1
+}
+
+list_layouts() (
+  cd "$directory"
+
+  echo "Available layouts:"
+  for layout in * ; do
+    echo " - ${layout%.sh}"
+  done
+)
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+  trap cleanup EXIT
+  
+  command=${1:-"help"}  
+
+  case "$command" in 
+    set) shift; set_layout "$@" ;;
+    list) list_layouts ;;    
+    *) usage ;;
+  esac  
+fi
