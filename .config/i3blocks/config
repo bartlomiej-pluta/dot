@@ -41,11 +41,6 @@ command=scripts/disk
 label= 
 interval=120
 
-[battery]
-command=scripts/battery
-interval=5
-markup=pango
-
 [date]
 command=scripts/date
 interval=1
