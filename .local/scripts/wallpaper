@@ -105,9 +105,12 @@ fetch-custom-wallpaper() {
 update-wallpaper() {
    info "Cleaning cache..."
    "$HOME/.local/bin/wal" -c
+   info "Updating wallpaper..."
    DISPLAY=:0.0 "$HOME/.local/bin/wal" -i "$DIR/wallpaper"
    ln -s "$HOME/.cache/wal/colors.Xresources" "$HOME/.Xresources" 2> /dev/null || true
-   info "Wallpaper updated"
+   info "Updating lock screen wallpaper..."
+   betterlockscreen -u "$DIR/wallpaper"
+   info "Wallpapers updated"
 }
 
 
