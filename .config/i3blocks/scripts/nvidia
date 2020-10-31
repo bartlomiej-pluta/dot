@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ -z "nvidia-smi" ]] || exit 
+
 temp_critic_thresh=90
 temp_warning_thresh=70
 
