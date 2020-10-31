@@ -94,7 +94,7 @@ fetch-custom-wallpaper() {
 
    info "Fetching wallpaper..."
    if wget "$url" --no-check-certificate -o /dev/null -O "$DIR/wallpaper.new" &> /dev/null ; then      
-      rm "$DIR/wallpaper" &> /dev/null
+      rm "$DIR/wallpaper" &> /dev/null || true
       mv "$DIR/wallpaper.new" "$DIR/wallpaper"
       update-wallpaper
    else 
