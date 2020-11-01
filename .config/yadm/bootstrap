@@ -5,8 +5,28 @@ init_submodules() (
    # be run from within $HOME (assuming this is the root of your dotfiles)
    cd "$HOME"
    echo "Init submodules"
-   yadm submodule update --recursive --init
+   echo yadm submodule update --recursive --init
 )
 
+install_packages() (
+   cd "$HOME/.config/yadm/"
+   echo "Install packages"
+
+   # Manjaro
+   if uname -r | grep -i manjaro >/dev/null 2>&1 ; then
+      manjaro_packages
+   fi
+)
+
+manjaro_packages() {
+   yay -S --needed - < packages.manjaro
+}
+
+install_python_modules() (
+   echo "Install Python modules"
+   pip install pywal ipython sympy 
+)
 
 init_submodules
+install_packages
+install_python_modules
