@@ -24,7 +24,7 @@ manjaro_packages() {
 
 install_python_modules() (
    echo "Install Python modules"
-   pip install pywal ipython sympy 
+   pip install --user pywal ipython sympy pandas
 )
 
 init_submodules
