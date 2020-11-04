@@ -24,12 +24,7 @@ manjaro_packages() {
 
 install_python_modules() (
    echo "Install Python modules"
-   pip install --user pywal ipython sympy pandas jupyter
-)
-
-prepare_file_structure() (
-   cd "$HOME"
-   mkdir -p Dokumenty/Jupyter
+   pip install --user pywal ipython sympy pandas
 )
 
 init_submodules
