@@ -34,10 +34,10 @@
 #  Default: []
 c.InteractiveShellApp.exec_lines = [
     'from __future__ import division',
-    'from sympy import *',
     'from sympy.abc import *',
-    'from sympy import S, N',
+    'from sympy import *',
     'from decimal import Decimal',
+    'import math',
     'import matplotlib.pyplot as plt',
     'import numpy as np',
     'import pandas as pd',
@@ -251,7 +251,7 @@ c.TerminalIPythonApp.display_banner = False
 ## If a command or file is given via the command-line, e.g. 'ipython foo.py',
 #  start an interactive shell after executing the file or command.
 #  Default: False
-# c.TerminalIPythonApp.force_interact = False
+c.TerminalIPythonApp.force_interact = True
 
 ## Enable GUI event loop integration with any of ('asyncio', 'glut', 'gtk',
 #  'gtk2', 'gtk3', 'osx', 'pyglet', 'qt', 'qt4', 'qt5', 'tk', 'wx', 'gtk2',
@@ -360,7 +360,7 @@ c.TerminalIPythonApp.display_banner = False
 #  no arguments are present).
 #  Choices: any of [0, 1, 2]
 #  Default: 0
-# c.InteractiveShell.autocall = 0
+c.InteractiveShell.autocall = 1
 
 ## Autoindent IPython code entered interactively.
 #  Default: True
@@ -487,7 +487,7 @@ c.TerminalIPythonApp.display_banner = False
 
 ## Show rewritten input, e.g. for autocall.
 #  Default: True
-# c.InteractiveShell.show_rewritten_input = True
+c.InteractiveShell.show_rewritten_input = False
 
 ## Enables rich html representation of docstrings. (This requires the docrepr
 #  module).
@@ -571,7 +571,7 @@ c.TerminalInteractiveShell.confirm_exit = False
 #  documentation for more information.
 #  Choices: any of ['column', 'multicolumn', 'readlinelike']
 #  Default: 'multicolumn'
-# c.TerminalInteractiveShell.display_completions = 'multicolumn'
+c.TerminalInteractiveShell.display_completions = 'column'
 
 ## If True, anything that would be passed to the pager
 #  See also: InteractiveShell.display_page
