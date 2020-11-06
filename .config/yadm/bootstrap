@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+resources="$HOME/.config/yadm/bootstrap-resources"
+
 init_submodules() (
    # Because Git submodule commands cannot operate without a work tree, they must
    # be run from within $HOME (assuming this is the root of your dotfiles)
@@ -8,8 +10,7 @@ init_submodules() (
    echo yadm submodule update --recursive --init
 )
 
-install_packages() (
-   cd "$HOME/.config/yadm/"
+install_packages() (   
    echo "Install packages"
 
    # Manjaro
@@ -19,7 +20,7 @@ install_packages() (
 )
 
 manjaro_packages() {
-   yay -S --needed - < packages.manjaro
+   yay -S --needed - < "$resources/packages.manjaro"
 }
 
 install_python_modules() (
@@ -27,6 +28,13 @@ install_python_modules() (
    pip install --user pywal ipython sympy pandas
 )
 
+configure_vs_code() (   
+   echo "Configure VS Code"
+   cat "$resources/vscode.extensions" | xargs -n 1 code --force --install-extension
+)
+
 init_submodules
 install_packages
 install_python_modules
+configure_vs_code
+exit 0
