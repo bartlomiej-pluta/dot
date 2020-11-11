@@ -59,4 +59,11 @@ for plugin in $plugins; do [[ -s "$plugin" ]] && source "$plugin"; done
 # SDKMAN! (this must be at the end of the file for SDKMAN to work)
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
 
+# Set PyWAL colors
 (/usr/bin/cat ~/.cache/wal/sequences &)
+
+# Run TMUX
+if command -v tmux > /dev/null ; then
+   [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && (tmux attach > /dev/null 2>&1 || tmux)
+fi
+
