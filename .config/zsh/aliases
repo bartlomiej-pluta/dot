@@ -2,6 +2,7 @@
 
 alias cat='bat'
 alias ls='exa'
+alias vim='nvim'
 alias ping='prettyping --nolegend'
 alias top='htop'
 alias du='ncdu --color dark --r -x'
