@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+alias g='git'
+alias y='yadm'
 alias cat='bat'
 alias ls='exa'
 alias vim='nvim'

@@ -1,0 +1,80 @@
+[user]
+	email = noreply.git@mx.bartlomiejpluta.com
+	name = Bartłomiej Przemysław Pluta
+[alias]					
+	
+	# Committing
+	aa 		= add --all
+	ap 		= add --patch
+	c 		= commit -v
+	c- 		= commit -v --amend
+	cn- 	= commit -v --amend --no-edit
+	ca 		= commit -v -a
+	ca- 	= commit -v -a --amend
+	can-	= commit -v -a --amend --no-edit	
+	cam 	= commit -v -a -m		
+	cm 		= commit -v -m
+	sb 		= status -sb
+
+	# Branches
+	b 		= branch
+	bd 		= branch -d
+	bd- 	= branch -D
+	co 		= checkout
+	cb 		= checkout -b	
+
+	# Pull & push
+	f 	= fetch
+	fa 	= fetch --all --prune	
+	ppull = !git pull origin $(git symbolic-ref --short HEAD)
+	push- 	= push --force-with-lease
+	pull- 	= pull --force
+	publish = ![[ $(git config branch.$(git symbolic-ref --short HEAD).merge) = '' ]] && git push -u origin $(git symbolic-ref --short HEAD) || git push
+	unpublish = !git push -u origin :$(git symbolic-ref --short HEAD)
+	
+	# Merging & rebasing
+	rb 		= rebase
+	rbi 	= rebase -i	
+
+	# Logs
+	last 	= log -1 HEAD --stat
+	l 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit
+	la 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --all
+	lp 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit -p
+	ls 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --stat
+	ld 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%ad)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --date=short
+	ldd		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%ad)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit
+
+	# Diff
+	d 	= diff
+	dw 	= diff --word-diff
+	ds 	= diff --staged
+	dsw = diff --staged --word-diff
+	dv	= difftool -t vimdiff -y
+
+	# Resetting & cleaning
+	pristine 	= !git reset --hard && git clean -dffx
+	clear 		= !git reset --hard && git clean -df
+	rh 				= reset
+	rhh 			= reset --hard
+	ru 				= reset --
+
+	# Stash
+	sta 	= stash push -a
+	stam 	= stash push -a -m
+	stal 	= stash list	 
+	stap	= stash pop
+	staa	= stash apply
+	stad	= stash drop
+
+	# Skipping worktree
+	ignore 		= update-index --skip-worktree
+	ignored 	= !git ls-files -v | grep ^S
+	unignore 	= update-index --no-skip-worktree
+
+	# WIP
+	wip		= !git add -A && (git rm $(git ls-files --deleted) 2> /dev/null || true) && git commit --no-verify --no-gpg-sign -m '--wip-- [skip ci]'
+	unwip	= !git log -n 1 | grep '\\-\\-wip\\-\\-' -q -c && git reset HEAD~1	
+
+	# Search & grep
+	se 	= !git rev-list --all | xargs git grep -F
