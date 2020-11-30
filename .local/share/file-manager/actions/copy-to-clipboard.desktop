@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Action
+Tooltip=Copy content to clipboard
+Name=Copy file content to clipboard
+Profiles=profile-zero;
+Icon=edit-copy
+Name[pl_PL]=Kopiuj zawartość do schowka
+Tooltip[pl_PL]=Kopiuj zwartość pliku do schowka
+
+[X-Action-Profile profile-zero]
+MimeTypes=text/*
+Exec=/bin/sh -c "cat %f | xclip -sel clip"
