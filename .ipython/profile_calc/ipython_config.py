@@ -728,12 +728,12 @@ c.TerminalInteractiveShell.display_completions = 'column'
 
 ## Automatically set the terminal title
 #  Default: True
-# c.TerminalInteractiveShell.term_title = True
+c.TerminalInteractiveShell.term_title = True
 
 ## Customize the terminal title format.  This is a python format string.
 #  Available substitutions are: {cwd}.
 #  Default: 'IPython: {cwd}'
-# c.TerminalInteractiveShell.term_title_format = 'IPython: {cwd}'
+c.TerminalInteractiveShell.term_title_format = 'Calc (IPython)'
 
 ## Use 24bit colors instead of 256 colors in prompt highlighting. If your
 #  terminal supports true color, the following command should print 'TRUECOLOR'
