@@ -280,7 +280,7 @@ mode "resize" {
 bindsym $mod+9 exec --no-startup-id betterlockscreen -l pixel -t "$(fortune -sn 30)"
 
 # Dropdown terminal
-exec_always --no-startup-id kitti3 -p top -s 1 1 -- -o background_opacity=0.7
+exec_always --no-startup-id kitti3 -p top -s 1 1 -- -o background_opacity=0.9
 bindsym F1 nop kitti3
 
 
