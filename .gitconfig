@@ -21,7 +21,7 @@
 	bd 		= branch -d
 	bd- 	= branch -D
 	co 		= checkout
-	cb 		= checkout -b	
+	cb 		= checkout -b		
 
 	# Pull & push
 	f 	= fetch
@@ -33,8 +33,12 @@
 	unpublish = !git push -u origin :$(git symbolic-ref --short HEAD)
 	
 	# Merging & rebasing
-	rb 		= rebase
-	rbi 	= rebase -i	
+	rb 			= rebase
+	rbi 		= rebase -i	
+	rbc			= rebase --continue
+	rba			= rebase --abort
+	ours 		= checkout --ours
+	theirs	= checkout --theirs
 
 	# Logs
 	last 	= log -1 HEAD --stat
