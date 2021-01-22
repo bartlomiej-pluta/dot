@@ -29,7 +29,6 @@ prompt bartek
 
 ## Autocompletion
 autoload -Uz compinit; compinit
-autoload -Uz completion.zsh; completion.zsh
 
 ## Lazy loading
 autoload -Uz lazy_loading.zsh; lazy_loading.zsh
@@ -43,8 +42,8 @@ source "$ZDOTDIR/keybinding"
 
 # Plugins
 plugins=(
-   "/usr/share/fzf/key-bindings.zsh"
-   "/usr/share/fzf/completion.zsh"
+   "$ZDOTDIR/plugins/fzf/key-bindings.zsh"
+   "$ZDOTDIR/plugins/fzf/completion.zsh"
    "$ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
    "$ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
    "$ZDOTDIR/plugins/bd/bd.zsh"
@@ -58,7 +57,7 @@ for plugin in $plugins; do [[ -s "$plugin" ]] && source "$plugin"; done
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
 
 # Set PyWAL colors
-(/usr/bin/cat ~/.cache/wal/sequences &)
+(/usr/bin/cat ~/.cache/wal/sequences >/dev/null 2>&1 || true &)
 
 # Run TMUX
 if command -v tmux > /dev/null ; then

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/bash
 
 set -euo pipefail
 IFS=$'\n\t'
@@ -24,7 +24,7 @@ init_submodules() (
   # be run from within $HOME (assuming this is the root of your dotfiles)
   cd "$HOME"
   info "Init submodules"
-  echo yadm submodule update --recursive --init
+  yadm submodule update --recursive --init
 )
 
 install_packages() {
@@ -34,10 +34,25 @@ install_packages() {
   if uname -r | grep -i manjaro >/dev/null 2>&1 ; then
       manjaro_packages
   fi
+
+  # Microsoft WSL
+  if uname -r | grep -iE "microsoft(.*)wsl" >/dev/null 2>&1 ; then
+    wsl_ubuntu_packages
+  fi
 }
 
-manjaro_packages() {
+manjaro_packages() {  
   yay -S --needed - < "$resources/packages.manjaro"
+  info "Install Python modules"
+  pip install --user pywal ipython sympy pandas
+}
+
+wsl_ubuntu_packages() {  
+  sudo apt update -y
+  sudo apt upgrade -y
+  xargs sudo apt install -y < "$resources/packages.wsl"
+  info "Updating CA certificates"
+  sudo update-ca-certificates
 }
 
 install_java_sdk_manager() {
@@ -45,27 +60,31 @@ install_java_sdk_manager() {
     info "Install SDK Manager"
     curl -s "https://get.sdkman.io" | bash
     todo "Install Java (sdk list java)"
+  fi || true
+}
+
+display_info() {
+  # Manjaro
+  if uname -r | grep -i manjaro >/dev/null 2>&1 ; then
+     info Done
   fi
+
+  # Microsoft WSL
+  if uname -r | grep -iE "microsoft(.*)wsl" >/dev/null 2>&1 ; then
+     info Done
+     todo 'WSL detected - please use YADM "wsl" to have proper configuration files'
+     todo 'Please also install Gpg4win in order to have access to the GUI pinentry program (refer to ~/.gnupg/gpg-agent.conf).'
+   fi
 }
 
-install_python_modules() {
-  info "Install Python modules"
-  pip install --user pywal ipython sympy pandas
-}
-
-configure_vs_code() { 
-  info "Configure VS Code"
-  cat "$resources/vscode.extensions" | xargs -n 1 code --force --install-extension || true
-}
 
 # Main script
 if { set -C; 2>/dev/null >"$lockfile"; }; then
   trap cleanup EXIT  
   init_submodules
   install_packages
-  install_java_sdk_manager
-  install_python_modules
-  configure_vs_code
+  install_java_sdk_manager  
+  display_info
 else
   fatal "Lock file '"$lockfile"' exists... Exiting"
 fi

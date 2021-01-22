@@ -28,5 +28,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#777777"
 export EDITOR="nvim"
 export VISUAL="nvim"
 
+# GPG
+export GPG_TTY=$(tty)
+
 # SDKMAN!
 export SDKMAN_DIR="$HOME/.sdkman"

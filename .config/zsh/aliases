@@ -2,8 +2,6 @@
 
 alias g='git'
 alias y='yadm'
-alias cat='bat'
-alias ls='exa'
 alias vim='nvim'
 alias ping='prettyping --nolegend'
 alias top='htop'
@@ -21,7 +19,6 @@ alias ..7='cd ../../../../../../../'
 alias err='echo >&2'
 alias del='trash'
 alias res='trash-restore'
-alias rm='err This command has been disabled. Use following command instead: del '
 
 # Directory stack
 alias d='dirs -v'
