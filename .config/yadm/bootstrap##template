@@ -14,6 +14,9 @@ todo()    { echo "- [ ] $*" >> "$todofile" ; }
 
 lockfile="/tmp/yadm-bootstrap.lock"
 resources="$HOME/.config/yadm/bootstrap-resources"
+os="{{ yadm.os }}"
+class="{{ yadm.class }}"
+distro="{{ yadm.distro }}"
 
 cleanup() {
   rm -f "$lockfile"
@@ -28,32 +31,46 @@ init_submodules() (
   yadm submodule update --recursive --init
 )
 
-install_packages() {
-  info "Install packages"
-
-  # Manjaro
-  if uname -r | grep -i manjaro >/dev/null 2>&1 ; then
-      manjaro_packages
+install_packages() {  
+  # Linux
+  if [ "$os" = "Linux" ] ; then    
+    case "$distro" in
+      ManjaroLinux) manjaro_packages ;;
+      *) fatal "Unknown distro! Interrupting..." ;;
+    esac
   fi
 
   # Microsoft WSL
-  if uname -r | grep -iE "microsoft(.*)wsl" >/dev/null 2>&1 ; then
-    wsl_ubuntu_packages
+  if [ "$os" = "WSL" ] ; then    
+    case "$distro" in
+      ubuntu) wsl_ubuntu_packages ;;
+      arch) wsl_arch_packages ;;
+      *) fatal "Unknown WSL distro! Interrupting..." ;;
+    esac
   fi
 }
 
 manjaro_packages() {  
+  info "Install Manjaro packages"
+  sudo pacman -Syu
   yay -S --needed - < "$resources/packages.manjaro"
   info "Install Python modules"
   pip install --user pywal ipython sympy pandas
 }
 
 wsl_ubuntu_packages() {  
+  info "Install Ubuntu WSL packages"
   sudo apt update -y
   sudo apt upgrade -y
-  xargs sudo apt install -y < "$resources/packages.wsl"
+  xargs sudo apt install -y < "$resources/packages.ubuntu_wsl"
   info "Updating CA certificates"
   sudo update-ca-certificates
+}
+
+wsl_arch_packages() {
+  info "Install Arch WSL packages"
+  sudo pacman -Syu
+  yay -S --needed - < "$resources/packages.arch_wsl"
 }
 
 install_java_sdk_manager() {
@@ -78,10 +95,9 @@ display_info() {
   fi
 
   # Microsoft WSL
-  if uname -r | grep -iE "microsoft(.*)wsl" >/dev/null 2>&1 ; then
-     info Done
-     todo 'WSL detected - please use YADM "wsl" to have proper configuration files'
-     todo 'Please also install Gpg4win in order to have access to the GUI pinentry program (refer to ~/.gnupg/gpg-agent.conf).'
+  if [ "$os" = "WSL" ] ; then
+     info Done     
+     todo 'Please install Gpg4win in order to have access to the GUI pinentry program (refer to ~/.gnupg/gpg-agent.conf).'
    fi
 }
 
