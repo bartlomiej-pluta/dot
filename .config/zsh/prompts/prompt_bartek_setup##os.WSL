@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+prompt_opts=(subst percent)
+
+prompt_bartek_setup() {  
+  sign='%(?.%F{blue}λ%f.%F{red}!%f)'  
+  PS1=$'%F{green}%1~ $sign '
+  RPS1='%F{green}%*%f %F{blue}@%F{yellow}%m%f '
+}
+
+prompt_bartek_setup $@

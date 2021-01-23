@@ -39,19 +39,9 @@ git_info() {
 
 prompt_bartek_setup() {  
   add-zsh-hook precmd prompt_bartek_precmd
-  sign='%(?.%F{blue}λ%f.%F{red}!%f)'
+  sign='%(?.%F{blue}λ%f.%F{red}!%f)'  
   PS1=$'%F{green}%1~ %F{yellow}$(git_info)$sign '
   RPS1='%F{green}%*%f %F{blue}@%F{yellow}%m%f '
 }
 
-prompt_bartek_setup_wsl() {
-  sign='%(?.%F{blue}λ%f.%F{red}!%f)'
-  PS1=$'%F{green}%1~ $sign '
-  RPS1='%F{green}%*%f %F{blue}@%F{yellow}%m%f '
-}
-
-if uname -r | grep -iE "microsoft(.*)wsl" >/dev/null 2>&1 ; then
-   prompt_bartek_setup_wsl $@
-else
-   prompt_bartek_setup $@
-fi
+prompt_bartek_setup $@
