@@ -29,6 +29,7 @@ prompt bartek
 
 ## Autocompletion
 autoload -Uz compinit; compinit
+autoload -Uz completion.zsh; completion.zsh
 
 ## Lazy loading
 autoload -Uz lazy_loading.zsh; lazy_loading.zsh
