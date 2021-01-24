@@ -33,3 +33,10 @@ export GPG_TTY=$(tty)
 
 # SDKMAN!
 export SDKMAN_DIR="$HOME/.sdkman"
+
+{% if yadm.os == "WSL" %}
+# X Server on WSL2
+export DISPLAY=$(ip route  | awk '/default via / {print $3; exit}' 2>/dev/null):0 
+export LIBGL_ALWAYS_INDIRECT=1
+{% endif %}
+
