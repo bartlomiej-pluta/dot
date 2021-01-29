@@ -62,6 +62,6 @@ for plugin in $plugins; do [[ -s "$plugin" ]] && source "$plugin"; done
 
 # Run TMUX
 if command -v tmux > /dev/null ; then
-   [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && tmux
+   [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && tmux || true
 fi
 
