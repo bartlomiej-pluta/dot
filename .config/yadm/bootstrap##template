@@ -97,7 +97,7 @@ display_info() {
   # Microsoft WSL
   if [ "$os" = "WSL" ] ; then
      info Done     
-     todo 'Please install Gpg4win in order to have access to the GUI pinentry program (refer to ~/.gnupg/gpg-agent.conf).'
+     todo 'Please install Git for Windows (Git Bash) to have access to the GUI pinentry program (refer to ~/.gnupg/gpg-agent.conf).'
    fi
 }
 
