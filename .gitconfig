@@ -42,12 +42,13 @@
 
 	# Logs
 	last 	= log -1 HEAD --stat
-	l 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit
-	la 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --all
-	lp 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit -p
-	ls 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --stat
-	ld 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%ad)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --date=short
-	ldd		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%ad)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit
+	lg 		= log --pretty='%C(magenta)%G?%Creset %C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit
+	l 		= log --pretty='%C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit
+	la 		= log --pretty='%C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --all
+	lp 		= log --pretty='%C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit -p
+	ls 		= log --pretty='%C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%cr)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --stat
+	ld 		= log --pretty='%C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%ad)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit --date=short
+	ldd		= log --pretty='%C(green)%h%Creset%C(red)%d%Creset %C(auto)%s %C(magenta)(%ad)%Creset %C(blue)<%cn>%Creset' --topo-order --decorate --boundary --graph --abbrev-commit
 
 	# Diff
 	d 	= diff
