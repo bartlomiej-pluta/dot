@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 IFS=$'\n\t'
@@ -48,6 +48,11 @@ install_packages() {
       *) fatal "Unknown WSL distro! Interrupting..." ;;
     esac
   fi
+
+  # Mac OS X
+  if [ "$os" = "Darwin" ] ; then
+    macos_homebrew_packages
+  fi
 }
 
 manjaro_packages() {  
@@ -71,6 +76,13 @@ wsl_arch_packages() {
   info "Install Arch WSL packages"
   sudo pacman -Syu
   yay -S --needed - < "$resources/packages.arch_wsl"
+}
+
+macos_homebrew_packages() {
+   info "Installing Mac OS X packages with Homebrew"
+   for package in $(cat "$resources/packages.macos_homebrew") ; do
+      brew install "$package"
+   done
 }
 
 install_java_sdk_manager() {
