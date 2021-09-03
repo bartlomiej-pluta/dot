@@ -70,10 +70,13 @@ for plugin in $plugins; do [[ -s "$plugin" ]] && source "$plugin"; done
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh" || true
 
 # Set PyWAL colors
-(/usr/bin/cat ~/.cache/wal/sequences >/dev/null 2>&1 || true &)
+if command -v wal > /dev/null ; then
+  (/usr/bin/cat ~/.cache/wal/sequences || true &)
+  source ~/.cache/wal/colors-tty.sh || true
+fi
 
 # Run TMUX
 if command -v tmux > /dev/null ; then
-   [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && tmux || true
+  [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && tmux || true
 fi
 

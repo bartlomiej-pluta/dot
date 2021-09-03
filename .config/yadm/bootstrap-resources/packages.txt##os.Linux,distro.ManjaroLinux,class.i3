@@ -1,6 +1,13 @@
+gcc
+make
+python
+xorg-xrandr
+fakeroot
+zsh
 tmux
 exa
 bat
+fzf
 trash-cli
 i3blocks
 rofi
@@ -18,3 +25,4 @@ yad
 betterlockscreen
 sysstat
 code
+catfish

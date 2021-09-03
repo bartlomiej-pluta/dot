@@ -1,7 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -euo pipefail
-IFS=$'\n\t'
+# Save this file as ~/.config/yadm/bootstrap and make it executable. It will
+# execute all executable files (excluding templates and editor backups) in the
+# ~/.config/yadm/bootstrap.d directory when run.
+
+set -eu
 
 readonly logfile="/tmp/$(basename "$0").log"
 info()    { echo "[INFO]    $*" | tee -a "$logfile" >&2 ; }
@@ -9,119 +12,35 @@ warning() { echo "[WARNING] $*" | tee -a "$logfile" >&2 ; }
 error()   { echo "[ERROR]   $*" | tee -a "$logfile" >&2 ; }
 fatal()   { echo "[FATAL]   $*" | tee -a "$logfile" >&2 ; exit 1 ; }
 
-todofile="$HOME/todo.$(date +%s).md"
-todo()    { echo "- [ ] $*" >> "$todofile" ; }
+todofile="$HOME/todo.md"
 
-lockfile="/tmp/yadm-bootstrap.lock"
-resources="$HOME/.config/yadm/bootstrap-resources"
 os="{{ yadm.os }}"
 class="{{ yadm.class }}"
 distro="{{ yadm.distro }}"
 
-cleanup() {
-  rm -f "$lockfile"
-	exit
-}
+# Directory to look for bootstrap executables in
+BOOTSTRAP_D="${BASH_SOURCE[0]}.d"
 
-init_submodules() (
-  # Because Git submodule commands cannot operate without a work tree, they must
-  # be run from within $HOME (assuming this is the root of your dotfiles)
-  cd "$HOME"
-  info "Init submodules"
-  yadm submodule update --recursive --init
-)
+info "OS: $os"
+info "CLASS: $class"
+info "DISTRO: $distro"
 
-install_packages() {  
-  # Linux
-  if [ "$os" = "Linux" ] ; then    
-    case "$distro" in
-      ManjaroLinux) manjaro_packages ;;
-      *) fatal "Unknown distro! Interrupting..." ;;
-    esac
-  fi
+rm -f "$todofile" || true
 
-  # Microsoft WSL
-  if [ "$os" = "WSL" ] ; then    
-    case "$distro" in
-      ubuntu) wsl_ubuntu_packages ;;
-      arch) wsl_arch_packages ;;
-      *) fatal "Unknown WSL distro! Interrupting..." ;;
-    esac
-  fi
-
-  # Mac OS X
-  if [ "$os" = "Darwin" ] ; then
-    macos_homebrew_packages
-  fi
-}
-
-manjaro_packages() {  
-  info "Install Manjaro packages"
-  sudo pacman -Syu
-  yay -S --needed - < "$resources/packages.manjaro"
-  info "Install Python modules"
-  pip install --user pywal ipython sympy pandas
-}
-
-wsl_ubuntu_packages() {  
-  info "Install Ubuntu WSL packages"
-  sudo apt update -y
-  sudo apt upgrade -y
-  xargs sudo apt install -y < "$resources/packages.ubuntu_wsl"
-  info "Updating CA certificates"
-  sudo update-ca-certificates
-}
-
-wsl_arch_packages() {
-  info "Install Arch WSL packages"
-  sudo pacman -Syu
-  yay -S --needed - < "$resources/packages.arch_wsl"
-}
-
-macos_homebrew_packages() {
-   info "Installing Mac OS X packages with Homebrew"
-   for package in $(cat "$resources/packages.macos_homebrew") ; do
-      brew install "$package"
-   done
-}
-
-install_java_sdk_manager() {
-  if ! command -v sdk ; then
-    info "Install SDK Manager"
-    curl -s "https://get.sdkman.io" | bash
-    todo "Install Java (sdk list java)"
-  fi || true
-}
-
-install_nvm() {
-   info "Installing Node.js Version Manager (NVM)"
-   todo "Update NVM version (current is v0.37.2)"
-   todo "Install Node.js via 'nvm install node' command"
-   wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-}
-
-display_info() {
-  # Manjaro
-  if uname -r | grep -i manjaro >/dev/null 2>&1 ; then
-     info Done
-  fi
-
-  # Microsoft WSL
-  if [ "$os" = "WSL" ] ; then
-     info Done     
-     todo 'Please install Git for Windows (Git Bash) to have access to the GUI pinentry program (refer to ~/.gnupg/gpg-agent.conf).'
-   fi
-}
-
-
-# Main script
-if { set -C; 2>/dev/null >"$lockfile"; }; then
-  trap cleanup EXIT  
-  init_submodules
-  install_packages
-  install_java_sdk_manager  
-  install_nvm
-  display_info
-else
-  fatal "Lock file '"$lockfile"' exists... Exiting"
+if [[ ! -d "$BOOTSTRAP_D" ]]; then
+    fatal "Error: bootstrap directory '$BOOTSTRAP_D' not found"
 fi
+
+find -L "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
+    if [[ -x "$bootstrap" && ! "$bootstrap" =~ "##" && ! "$bootstrap" =~ "~$" ]]; then
+	info "Executing script '$(basename "$bootstrap")'"
+
+        if ! "$bootstrap"; then
+            fatal "Error: bootstrap '$bootstrap' failed"
+        fi
+    fi
+done
+
+info "Done! Please review '$todofile' file to proceed"
+info "$ cat $todofile:"
+cat $todofile
