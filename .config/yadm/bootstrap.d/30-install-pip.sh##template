@@ -26,11 +26,8 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
    trap cleanup EXIT  
 
    # Bootstrap script goes here...
-{% if yadm.class == "termux" %}   
-{% else %}   
    info "Install PIP manager"
    python -m ensurepip 2>&1 | tee -a "$logfile"
-{% endif %}
    info "Upgrade PIP manager"
    python -m pip install --upgrade pip 2>&1 | tee -a "$logfile"
 else

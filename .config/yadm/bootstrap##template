@@ -6,13 +6,8 @@
 
 set -eu
 
-{% if yadm.class == "termux" %}
-readonly logfile="/data/data/com.termux/files/home/yadm-bootstrap.log"
-readonly lockfile="/data/data/com.termux/files/home/yadm-bootstrap.lock"
-{% else %}
 readonly logfile="/tmp/yadm-bootstrap.log"
 readonly lockfile="/tmp/yadm-bootstrap.lock"
-{% endif %}
 info()    { echo "[INFO]    $*" | tee -a "$logfile" >&2 ; }
 warning() { echo "[WARNING] $*" | tee -a "$logfile" >&2 ; }
 error()   { echo "[ERROR]   $*" | tee -a "$logfile" >&2 ; }

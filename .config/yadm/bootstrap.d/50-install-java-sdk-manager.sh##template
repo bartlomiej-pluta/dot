@@ -26,16 +26,11 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
    trap cleanup EXIT  
 
    # Bootstrap script goes here...
-{% if yadm.class == "termux" %}
-   info "Exitting on Termux environment"
-   exit
-{% else %}
    if ! command -v sdk ; then
       info "Install Java SDK Manager"
       curl -s "https://get.sdkman.io" | bash 
       todo "Install Java (sdk list java)"
    fi || true
-{% endif %}
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"
 fi
