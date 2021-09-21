@@ -25,10 +25,15 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
    trap cleanup EXIT  
 
    # Bootstrap script goes here...
+{% if yadm.class == "termux" %}
+   info "Exitting on Termux environment"
+   exit
+{% else %}
    info "Install Node.js Version Manager (NVM)"
    todo "Update NVM version (current is v0.37.2)"
    todo "Install Node.js via 'nvm install node' command"
    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+{% endif %}
 
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"

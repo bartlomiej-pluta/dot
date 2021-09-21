@@ -26,7 +26,12 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
 
    # Bootstrap script goes here...
    info "Install Python packages"
+{% if yadm.class == "termux" %}
+   LDFLAGS="-lm -lcompiler_rt" CFLAGS="-I/data/data/com.termux/files/usr/include/" python -m pip install Pillow
+   LDFLAGS="-lm -lcompiler_rt" python -m pip install "$resources/pip.txt"
+{% else %}
    python -m pip install --user -r "$resources/pip.txt"
+{% endif %}
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"
 fi
