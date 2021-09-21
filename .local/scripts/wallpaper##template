@@ -103,6 +103,15 @@ fetch-custom-wallpaper() {
 }
 
 update-wallpaper() {
+{% if yadm.class == "i3" %}
+   update-wallpaper-i3 "$@"
+   exit
+{% endif %}
+
+   fatal "Unsupported DE"
+}
+
+update-wallpaper-i3() {
    info "Cleaning cache..."
    "$HOME/.local/bin/wal" -c
    info "Updating wallpaper..."
