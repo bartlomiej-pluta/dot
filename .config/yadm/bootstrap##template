@@ -6,7 +6,13 @@
 
 set -eu
 
-readonly logfile="/tmp/$(basename "$0").log"
+{% if yadm.class == "termux" %}
+readonly logfile="/data/data/com.termux/files/home/yadm-bootstrap.log"
+readonly lockfile="/data/data/com.termux/files/home/yadm-bootstrap.lock"
+{% else %}
+readonly logfile="/tmp/yadm-bootstrap.log"
+readonly lockfile="/tmp/yadm-bootstrap.lock"
+{% endif %}
 info()    { echo "[INFO]    $*" | tee -a "$logfile" >&2 ; }
 warning() { echo "[WARNING] $*" | tee -a "$logfile" >&2 ; }
 error()   { echo "[ERROR]   $*" | tee -a "$logfile" >&2 ; }
@@ -35,7 +41,7 @@ find -L "$BOOTSTRAP_D" -type f | sort | while IFS= read -r bootstrap; do
     if [[ -x "$bootstrap" && ! "$bootstrap" =~ "##" && ! "$bootstrap" =~ "~$" ]]; then
 	info "Executing script '$(basename "$bootstrap")'"
 
-        if ! "$bootstrap"; then
+        if ! "$bootstrap" "$logfile" "$lockfile" "${os:-' '}" "${distro:-' '}" "${class:-' '}"; then
             fatal "Error: bootstrap '$bootstrap' failed"
         fi
     fi

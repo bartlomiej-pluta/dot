@@ -1,9 +1,11 @@
-#!/usr/bin/env bash
-
 set -euo pipefail
 IFS=$'\n\t'
 
-readonly logfile="/tmp/$(basename "$0").log"
+readonly logfile="$1"
+readonly lockfile="$2"
+readonly os="$3"
+readonly distro="$4"
+readonly class="$5"
 info()    { echo "[INFO]    $*" | tee -a "$logfile" >&2 ; }
 warning() { echo "[WARNING] $*" | tee -a "$logfile" >&2 ; }
 error()   { echo "[ERROR]   $*" | tee -a "$logfile" >&2 ; }
@@ -12,7 +14,6 @@ fatal()   { echo "[FATAL]   $*" | tee -a "$logfile" >&2 ; exit 1 ; }
 todofile="$HOME/todo.md"
 todo()    { echo "- [ ] $*" >> "$todofile" ; }
 
-lockfile="/tmp/yadm-bootstrap.lock"
 resources="$HOME/.config/yadm/bootstrap-resources"
 
 cleanup() {
@@ -26,7 +27,11 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
 
    # Bootstrap script goes here...
    info "Install Termux packages"
-   cat "$resources/packages.txt" | xargs pkg install 
+   yes | pkg update 2>&1 | tee -a "$logfile" || true
+   yes | pkg upgrade 2>&1 | tee -a "$logfile" || true   
+   for package in $(cat "$resources/packages.txt") ; do
+      yes | pkg install "$package" 2>&1 | tee -a "$logfile" || true
+   done || true
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"
 fi
