@@ -77,6 +77,6 @@ fi
 
 # Run TMUX
 if command -v tmux > /dev/null ; then
-  [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && tmux || true
+  [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && tmux -2 || true
 fi
 
