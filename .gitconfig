@@ -1,6 +1,10 @@
 [user]
 	email = noreply.git@mx.bartlomiejpluta.com
 	name = Bartłomiej Przemysław Pluta
+
+[init]
+	defaultBranch = master
+
 [alias]					
 	
 	# Committing
