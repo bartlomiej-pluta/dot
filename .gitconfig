@@ -87,3 +87,5 @@
 
 	# Search & grep
 	se 	= !git rev-list --all | xargs git grep -F
+[core]
+	quotepath = off
