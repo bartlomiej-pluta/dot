@@ -26,3 +26,4 @@ betterlockscreen
 sysstat
 code
 catfish
+dwdiff
