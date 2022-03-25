@@ -27,3 +27,6 @@ sysstat
 code
 catfish
 dwdiff
+net-tools
+nmap
+reflector

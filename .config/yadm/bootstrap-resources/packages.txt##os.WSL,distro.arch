@@ -12,3 +12,7 @@ zip
 unzip
 libxtst
 dwdiff
+gnu-netcat
+net-tools
+nmap
+reflector
