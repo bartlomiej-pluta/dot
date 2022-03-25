@@ -27,7 +27,7 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
 
    # Bootstrap script goes here...
    info "Install Mac OS X packages with Homebrew"
-   for package in $(cat "$resources/packages.txt") ; do
+   for package in $(cat "$resources/brew.txt") ; do
       brew install "$package" 2>&1 | tee -a "$logfile"
    done
 else

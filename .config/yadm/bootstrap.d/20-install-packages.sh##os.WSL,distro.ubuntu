@@ -29,7 +29,7 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
    info "Install Ubuntu WSL packages"
    sudo apt update -y 2>&1 | tee -a "$logfile"
    sudp apt upgrade -y 2>&1 | tee -a "$logfile"
-   xargs sudo apt install -y < "$resources/packages.txt" 2>&1 | tee -a "$logfile"
+   xargs sudo apt install -y < "$resources/apt.txt" 2>&1 | tee -a "$logfile"
    sudo update-ca-certificates 2>&1 | tee -a "$logfile"
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"

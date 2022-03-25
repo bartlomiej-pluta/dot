@@ -1,4 +1,0 @@
-numpy
-sympy
-pandas
-pywal

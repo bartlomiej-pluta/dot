@@ -1,0 +1,44 @@
+gcc
+make
+python
+xorg-xrandr
+fakeroot
+zsh
+tmux
+exa
+bat
+fzf
+unzip
+trash-cli
+neovim
+ttf-fira-code
+networkmanager-l2tp
+prettyping
+flameshot
+sysstat
+code
+dwdiff
+gnu-netcat
+net-tools
+nmap
+reflector
+
+{% if yadm.class=="i3" %}
+i3blocks
+rofi
+kitty
+kitti3
+ttf-font-awesome-4
+cbatticon
+picom
+yad
+betterlockscreen
+{% endif %}
+
+{% if yadm.class == "xfce" %}
+catfish
+{% endif %}
+
+{% if yadm.os == "WSL" %}
+libxtst
+{% endif %}

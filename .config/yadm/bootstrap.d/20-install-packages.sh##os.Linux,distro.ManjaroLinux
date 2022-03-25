@@ -27,9 +27,9 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
 
    # Bootstrap script goes here...
    info "Install Manjaro packages"
-   sudo pacman -Syu 2>&1 | tee -a "$logfile"
-   sudo pacman -S yay 2>&1 | tee -a "$logfile"
-   yay -S --needed - < "$resources/packages.txt" 2>&1 | tee -a "$logfile"
+   sudo pacman -Syu --noconfirm 2>&1 | tee -a "$logfile"
+   sudo pacman -S --noconfirm yay 2>&1 | tee -a "$logfile"
+   yay -S --needed - < "$resources/pacman.txt" 2>&1 | tee -a "$logfile"
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"
 fi
