@@ -1,19 +1,16 @@
 {
     "editor.minimap.enabled": false,
     "editor.fontFamily": "'Fira Code', 'Cascadia Code', 'FontAwesome', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.fontWeight": "600",
     "editor.fontLigatures": true,
     "editor.tabSize": 2,
     "git.autofetch": true,
     "diffEditor.ignoreTrimWhitespace": false,
     "explorer.confirmDelete": false,
-    "workbench.colorTheme": "Ayu Light Bordered",
-    "indentRainbow.colors": [
-        "rgba(255,255,64,0.05)",
-        "rgba(127,255,127,0.05)",
-        "rgba(255,127,255,0.05)",
-        "rgba(79,236,236,0.05)"
-    ],
     "gitlens.hovers.currentLine.over": "line",
     "gitlens.defaultDateFormat": "dddd DD.MM.YYYY, HH:mm",
-    "gitlens.defaultDateShortFormat": "DD.MM.YYYY"
+    "gitlens.defaultDateShortFormat": "DD.MM.YYYY",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "workbench.colorTheme": "Atom One Dark",
+    "languageToolLinter.languageTool.motherTongue": "pl-PL",
 }
