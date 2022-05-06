@@ -34,6 +34,12 @@ autoload -Uz completion.zsh; completion.zsh
 ## Lazy loading
 autoload -Uz lazy_loading.zsh; lazy_loading.zsh
 
+# Enable builtin ZSH calculator
+autoload zcalc
+
+# Enable builtin bulk renamer
+autoload zmv
+
 # Path
 # Disclaimer: This variable couldn't be located in ~/.zshenv
 # because of the fact, that the ~/.zshenv is laoded at the
@@ -71,12 +77,12 @@ for plugin in $plugins; do [[ -s "$plugin" ]] && source "$plugin"; done
 
 # Set PyWAL colors
 if command -v wal > /dev/null ; then
-  (/usr/bin/cat ~/.cache/wal/sequences || true &)
-  source ~/.cache/wal/colors-tty.sh || true
+  (/usr/bin/cat ~/.cache/wal/sequences 2>/dev/null || true &)
+  source ~/.cache/wal/colors-tty.sh 2>/dev/null || true
 fi
 
-# Run TMUX
+# Run TMUX (exec instead of fork)
 if command -v tmux > /dev/null ; then
-  [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && tmux -u -2 || true
+  [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux -u -2 || true
 fi
 
