@@ -4,6 +4,9 @@
 ## Disable beeping
 setopt NO_BEEP
 
+## Use VIM keymaps
+setopt vi
+
 ## Change directory without cd
 setopt AUTO_CD
 
