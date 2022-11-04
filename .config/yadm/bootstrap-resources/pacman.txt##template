@@ -27,6 +27,7 @@ starship
 fd
 bandwhich
 git-delta
+tealdeer
 
 {% if yadm.class=="i3" %}
 i3blocks
