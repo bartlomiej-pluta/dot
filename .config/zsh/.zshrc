@@ -43,18 +43,8 @@ autoload zcalc
 # Enable builtin bulk renamer
 autoload zmv
 
-# Path
-# Disclaimer: This variable couldn't be located in ~/.zshenv
-# because of the fact, that the ~/.zshenv is laoded at the
-# pretty early stage and then it could be updated
-# with system-related value (it actually happens on Mac OS X).
-# In order to prevent that, the PATH should be defined right in here
-# to enforce highest priority of defined locations (the locations
-# defined in here will be effectively at the top and will be the first locations
-# to look for given executables).
-typeset -U PATH path
-path=("$HOME/.local/scripts" "$HOME/.local/bin" "$path[@]")
-export PATH
+# Environment variables
+source "$ZDOTDIR/env"
 
 # Aliases and functions
 source "$ZDOTDIR/aliases"
