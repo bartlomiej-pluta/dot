@@ -7,6 +7,9 @@ set incsearch  " Enable incremental searching
 set ignorecase " Ignore case when searching
 set smartcase  " Disable ignorecase option when one letter at least is upper
 
+" Disable confirming the willing to switch buffer
+set hidden
+
 " Enable autosyntax highlighting
 syntax on
 
@@ -57,3 +60,6 @@ set wildmenu
 " Remember cursor position after editor is shutdown
 autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") |
     \ exe "normal `\"" | endif
+
+" Switch buffers
+nnoremap <Leader>b :buffers<CR>:buffer<Space>
