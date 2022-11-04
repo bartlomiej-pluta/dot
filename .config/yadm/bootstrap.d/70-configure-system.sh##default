@@ -30,6 +30,10 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
 
    if python -c "import pywal" ; then
       todo "Please set PyWAL wallpaper: pywal -i path/to/wallpaper.png (or python -m pywal -i path/to/wallpaper.png)"
+
+      if ! command -v starship > /dev/null ; then
+         todo "Please install starship package (https://starship.rs/guide/#%F0%9F%9A%80-installation) for ZSH prompt to work properly"
+      fi
    fi
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"

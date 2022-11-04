@@ -26,9 +26,11 @@ setopt PUSHD_SILENT
 fpath=("$ZDOTDIR/sources" "$ZDOTDIR/prompts" "$ZDOTDIR/plugins/sd" $fpath)
 
 ## Prompt
+# We are using Starship prompt
+# that's why custom ZSH prompt is disabled
 #autoload -Uz prompt.zsh; prompt.zsh
-autoload -Uz promptinit; promptinit
-prompt bartek
+# autoload -Uz promptinit; promptinit
+# prompt bartek
 
 ## Autocompletion
 autoload -Uz compinit; compinit
@@ -80,3 +82,4 @@ if command -v tmux > /dev/null ; then
   [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux -u -2 || true
 fi
 
+eval "$(starship init zsh)"

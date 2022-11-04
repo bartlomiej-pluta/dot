@@ -23,6 +23,7 @@ gnu-netcat
 net-tools
 nmap
 reflector
+starship
 
 {% if yadm.class=="i3" %}
 i3blocks
