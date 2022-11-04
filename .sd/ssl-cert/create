@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+# Generate new SSL certificate using CA root certificate
+#
+# Usage:
+#   sd ssl-cert create -n NAME -c CA_CERT -k CA_CERT_KEY -d DOMAIN
+#
+# Examples:
+#   To create tvheadend.crt and tvheadend.key files, one can use following command:
+#   ssl-cert -n tvheadend -c ca.pem -k ca.key -d tvheadend.lan 
+#
+# Options:
+#   -n NAME        - the common name for *.crt and *.key output files
+#   -c CA_CERT     - the CA certificate file
+#   -k CA_CERT_KEY - the CA certificate key file
+#   -d DOMAIN      - the SSL certificate domain
+
+set -euo pipefail
+
+sslbin=$(which openssl)
+
+name=""
+ca_cert=""
+ca_key=""
+domain=""
+
+while getopts "n:c:k:d:" o; do
+   case "${o}" in
+      n)
+         name=${OPTARG}
+         ;;
+      c)
+         ca_cert=${OPTARG}
+         ;;
+      k)
+         ca_key=${OPTARG}
+         ;;
+      d)
+         domain=${OPTARG}
+         ;;
+      *)
+         exit 1
+         ;;
+   esac
+done
+
+shift $((OPTIND-1))
+
+if [ -z "$name" ] ; then
+   echo "[Error] Missing certificate name"
+   exit 1
+fi
+
+if [ -z "$ca_cert" ] ; then
+   echo "[Error] Missing certificate CA certificate file"
+   exit 1
+fi
+
+if [ -z "$ca_key" ] ; then
+   echo "[Error] Missing certificate CA key file"
+   exit 1
+fi
+
+if [ -z "$domain" ] ; then
+   echo "[Error] Missing certificate domain"
+   exit 1
+fi
+
+ext="/tmp/$name.ext"
+echo "authorityKeyIdentifier=keyid,issuer" > "$ext"
+echo "basicConstraints=CA:FALSE" >> "$ext"
+echo "keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment" >> "$ext"
+echo "subjectAltName = @alt_names" >> "$ext"
+echo "" >> "$ext"
+echo "[alt_names]" >> "$ext"
+echo "DNS.1 = $domain" >> "$ext"
+
+"$sslbin" genrsa -out "$name.key" 4096
+"$sslbin" req -new -key "$name.key" -out "/tmp/$name.csr"
+"$sslbin" x509 -req -in "/tmp/$name.csr" -CA "$ca_cert" -CAkey "$ca_key"  -CAcreateserial -out "$name.crt" -days 3650 -sha256 -extfile "/tmp/$name.ext"
