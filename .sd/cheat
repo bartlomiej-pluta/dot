@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Fetch TLDR manual and usages about given command from cheat.sh service
+
+set -euo pipefail
+
+curl "cheat.sh/$1" | more

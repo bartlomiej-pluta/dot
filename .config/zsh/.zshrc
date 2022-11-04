@@ -23,7 +23,7 @@ setopt PUSHD_SILENT
 
 # Sources
 ## Update fpath
-fpath=("$ZDOTDIR/sources" "$ZDOTDIR/prompts" $fpath)
+fpath=("$ZDOTDIR/sources" "$ZDOTDIR/prompts" "$ZDOTDIR/plugins/sd" $fpath)
 
 ## Prompt
 #autoload -Uz prompt.zsh; prompt.zsh
@@ -60,6 +60,7 @@ plugins=(
    "$ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
    "$ZDOTDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
    "$ZDOTDIR/plugins/bd/bd.zsh"
+   "$ZDOTDIR/plugins/sd/sd.plugin.zsh"
 )
 
 ## Load automatically plugins

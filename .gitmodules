@@ -7,3 +7,6 @@
 [submodule ".config/zsh/plugins/bd"]
 	path = .config/zsh/plugins/bd
 	url = https://github.com/Tarrasch/zsh-bd.git
+[submodule ".config/zsh/plugins/sd"]
+	path = .config/zsh/plugins/sd
+	url = https://github.com/ianthehenry/sd.git

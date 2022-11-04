@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Generate new QR code using the data from standard input and display it on screen
+
+set -euo pipefail
+
+qrencode -l H -o - | display

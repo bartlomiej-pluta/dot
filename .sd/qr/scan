@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Scan QR code using builtin webcam
+
+set -euo pipefail
+
+zbarcam --raw --oneshot
