@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Send notification through ntfy.sh service
+#
+# Usage:
+#   sd ntfy send MESSAGE [-t TITLE] [-p PRIORITY] [-T TOPIC]
+#
+# Options:
+#   -t TITLE    - set title of notification (default is the result of "uname -n" command)
+#   -p PRIORITY - set the priority of notification (default: 3)
+#   -T TOPIC    - set the topic of notification (default is being configured by with ~/.ntfy/topic.txt file)
+
+
+set -euo pipefail
+
+if [ "$#" -eq 0 ] ; then
+   exit 1
+fi
+
+ntfy_instance="ntfy.sh"
+topic_file="$XDG_CONFIG_HOME/ntfy/topic.txt"
+topic="$(/usr/bin/cat "$topic_file" 2>/dev/null || true)"
+message="$1"
+priority=3
+title=$(/usr/bin/uname -n)
+
+shift;
+
+while getopts ":t:p:T:" arg; do
+   case "$arg" in
+      t)
+         title="$OPTARG"
+         ;;
+      p)
+         priority="$OPTARG"
+         ;;
+      T)
+         topic="$OPTARG"
+         ;;
+      *)
+         exit 1
+         ;;
+   esac
+done
+
+shift $((OPTIND-1))
+
+if [ -z "$topic" ] ; then
+   echo "[Error] The topic file [$topic_file] is empty. Please either define the file and put topic as a content of that or use -T option to force one-time topic."
+   exit 1
+fi
+
+
+if curl -d "$message" "$ntfy_instance/$topic" -H "X-Priority: $priority" -H "X-Title: $title" > /dev/null 2>&1; then
+   exit 0
+else
+   exit 1
+fi
