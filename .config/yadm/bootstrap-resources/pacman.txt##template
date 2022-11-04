@@ -24,6 +24,9 @@ net-tools
 nmap
 reflector
 starship
+fd
+bandwhich
+git-delta
 
 {% if yadm.class=="i3" %}
 i3blocks

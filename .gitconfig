@@ -87,5 +87,25 @@
 
 	# Search & grep
 	se 	= !git rev-list --all | xargs git grep -F
+
 [core]
-	quotepath = off
+   pager = delta
+   quotepath = off
+
+[interactive]
+   diffFilter = delta --color-only
+
+[add.interactive]
+   useBuilting = false
+
+[delta]
+   navigate = true
+   light = false
+   line-numbers = true
+   zero-style = dim syntax
+
+[merge]
+   conflictstyle = diff3
+
+[diff]
+   colorMoved = default
