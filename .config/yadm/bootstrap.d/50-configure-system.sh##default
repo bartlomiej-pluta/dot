@@ -26,7 +26,19 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
    trap cleanup EXIT  
 
    # Bootstrap script goes here...
-   python -m pip install --user -r "$resources/pip.txt" 2>&1 | tee -a "$logfile"
+   todo "Change shell to zsh with following command: chsh $USER --shell "$(which zsh)
+
+   if python -c "import pywal" > /dev/null 2>&1 ; then
+      todo "Please set PyWAL wallpaper: pywal -i path/to/wallpaper.png (or python -m pywal -i path/to/wallpaper.png)"
+   fi
+
+   if ! command -v delta > /dev/null ; then
+      todo "Install delta pager/diff tool as it is required for current Git configuration"
+   fi
+
+   if ! command -v starship > /dev/null ; then
+      todo "[Optional] Install starship package (https://starship.rs/guide/#%F0%9F%9A%80-installation) for ZSH prompt"
+   fi
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"
 fi

@@ -1,7 +1,0 @@
-numpy
-sympy
-pandas
-
-{% if yadm.os == "Linux" %}
-pywal
-{% endif %}
