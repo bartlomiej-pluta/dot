@@ -31,9 +31,6 @@ export VISUAL="nvim"
 # GPG
 export GPG_TTY=$(tty)
 
-# SDKMAN!
-export SDKMAN_DIR="$HOME/.sdkman"
-
 # SD script manager
 SD_ROOT="$HOME/.sd"
 
