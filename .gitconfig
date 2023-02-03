@@ -106,6 +106,19 @@
 
 [merge]
    conflictstyle = diff3
+   tool          = meld
 
 [diff]
    colorMoved = default
+   guitool = meld
+
+[difftool "meld"]
+   cmd = meld \"$LOCAL\" \"$REMOTE\" --label \"DIFF (ORIGINAL MY)\"
+
+[mergetool "meld"]
+   cmd = meld \"$LOCAL\" --label "LOCAL" \"$BASE\" --label "BASE"  \"$REMOTE\" --label "REMOTE" --output \"$MERGED\" 
+   trustExitCode = false
+
+[mergetool]
+   prompt = false
+   keepBackup = false
