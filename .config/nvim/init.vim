@@ -63,3 +63,20 @@ autocmd BufReadPost * if line("'\"") && line("'\"") <= line("$") |
 
 " Switch buffers
 nnoremap <Leader>b :buffers<CR>:buffer<Space>
+
+" Neovide
+if exists("g:neovide")
+
+   " Font
+   set guifont=Fira\ Code\ Nerd\ Font:h14
+
+   " Transparency color
+   let g:neovide_transparency = 0.9
+   let g:transparency = 0.8
+   let g:neovide_background_color = '#0f1117'.printf('%x', float2nr(255 * g:transparency))
+
+   " Start in fullscreen
+   let g:neovide_fullscreen = v:false
+   let g:neovide_cursor_vfx_mode = "pixiedust"
+   let g:neovide_cursor_vfx_particle_density = 100.0
+endif

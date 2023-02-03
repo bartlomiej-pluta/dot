@@ -27,6 +27,7 @@ fd
 bandwhich
 git-delta
 tealdeer
+ttf-firacode-nerd
 
 {% if yadm.class=="i3" %}
 i3blocks
