@@ -26,9 +26,12 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
    trap cleanup EXIT  
 
    # Bootstrap script goes here...
-   info "Install Arch packages"
-   sudo pacman -Syu --noconfirm 2>&1 | tee -a "$logfile"
-   sudo pacman -S --noconfirm --needed - < "$resources/pacman.txt" 2>&1 | tee -a "$logfile"
+   # Because Git submodule commands cannot operate without a work tree, they must
+   # be run from within $HOME (assuming this is the root of your dotfiles)
+   cd "$HOME"
+   info "Init submodules"
+   git --git-dir="$HOME/.local/share/dotfile.git" --work-tree="$HOME" submodule update --recursive --init 2>&1 | tee -a "$logfile"
+
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"
 fi

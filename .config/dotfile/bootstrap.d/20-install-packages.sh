@@ -14,7 +14,7 @@ fatal()   { echo "[FATAL]   $*" | tee -a "$logfile" >&2 ; exit 1 ; }
 todofile="$HOME/todo.md"
 todo()    { echo "- [ ] $*" >> "$todofile" ; }
 
-resources="$HOME/.config/yadm/bootstrap-resources"
+resources="$HOME/.config/dotfile/bootstrap-resources"
 
 cleanup() {
    rm -f "$lockfile"
@@ -26,10 +26,9 @@ if { set -C; 2>/dev/null >"$lockfile"; }; then
    trap cleanup EXIT  
 
    # Bootstrap script goes here...
-   info "Install Manjaro packages"
+   info "Install Arch packages"
    sudo pacman -Syu --noconfirm 2>&1 | tee -a "$logfile"
-   sudo pacman -S --noconfirm yay 2>&1 | tee -a "$logfile"
-   yay -S --needed - < "$resources/pacman.txt" 2>&1 | tee -a "$logfile"
+   sudo pacman -S --noconfirm --needed - < "$resources/pacman.txt" 2>&1 | tee -a "$logfile"
 else
    fatal "Lock file '"$lockfile"' exists... Exiting"
 fi

@@ -17,7 +17,6 @@ networkmanager-l2tp
 prettyping
 flameshot
 sysstat
-dwdiff
 gnu-netcat
 net-tools
 nmap
@@ -30,22 +29,3 @@ tealdeer
 ttf-firacode-nerd
 meld
 
-{% if yadm.class=="i3" %}
-i3blocks
-rofi
-kitty
-kitti3
-ttf-font-awesome-4
-cbatticon
-picom
-yad
-betterlockscreen
-{% endif %}
-
-{% if yadm.class == "xfce" %}
-catfish
-{% endif %}
-
-{% if yadm.os == "WSL" %}
-libxtst
-{% endif %}

@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# Save this file as ~/.config/yadm/bootstrap and make it executable. It will
-# execute all executable files (excluding templates and editor backups) in the
-# ~/.config/yadm/bootstrap.d directory when run.
+# Bootstrap your base working environment configured with ~/.config/dotfile/bootstrap.d scripts
 
 set -eu
 
@@ -15,12 +13,12 @@ fatal()   { echo "[FATAL]   $*" | tee -a "$logfile" >&2 ; exit 1 ; }
 
 todofile="$HOME/todo.md"
 
-os="{{ yadm.os }}"
-class="{{ yadm.class }}"
-distro="{{ yadm.distro }}"
+os="Linux"
+class=""
+distro="arch"
 
 # Directory to look for bootstrap executables in
-BOOTSTRAP_D="${BASH_SOURCE[0]}.d"
+BOOTSTRAP_D="$HOME/.config/dotfile/bootstrap.d"
 
 info "OS: $os"
 info "CLASS: $class"

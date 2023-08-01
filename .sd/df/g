@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Manage your dot-files repository with Git
+git --git-dir="$HOME/.local/share/dotfile.git" --work-tree="$HOME" "$@"
