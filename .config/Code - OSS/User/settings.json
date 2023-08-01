@@ -11,6 +11,6 @@
     "gitlens.defaultDateFormat": "dddd DD.MM.YYYY, HH:mm",
     "gitlens.defaultDateShortFormat": "DD.MM.YYYY",
     "latex-workshop.view.pdf.viewer": "tab",
-    "workbench.colorTheme": "Atom One Dark",
+    "workbench.colorTheme": "Dracula",
     "languageToolLinter.languageTool.motherTongue": "pl-PL",
 }

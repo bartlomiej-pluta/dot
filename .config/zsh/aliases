@@ -1,0 +1,39 @@
+#!/bin/zsh
+
+alias g='git'
+alias y='yadm'
+alias preview="fzf --preview 'bat --color \"always\" {}'"
+alias vpn='nordvpn'
+alias calc='ipython --profile=calc'
+alias ..2='cd ../../'
+alias ..3='cd ../../../'
+alias ..4='cd ../../../../'
+alias ..5='cd ../../../../../'
+alias ..6='cd ../../../../../../'
+alias ..7='cd ../../../../../../../'
+alias err='echo >&2'
+alias del='trash'
+alias res='trash-restore'
+
+# !!! ONLY FOR WSL2 ###
+# Use Windows' git when working under C:\ drive (only for WSL)
+# function git() {
+#    if $(pwd -P | grep -q "^\/mnt\/c\/*"); then
+#       git.exe "$@"
+#    else
+#       command git "$@"
+#    fi
+# 
+# }
+
+# Improved basic commands replacements
+command -v exa >/dev/null 2>&1 && alias ls='exa' || true
+command -v bat >/dev/null 2>&1 && alias cat='bat' || true
+command -v nvim >/dev/null 2>&1 && alias vim='nvim' || true
+command -v prettyping >/dev/null 2>&1 && alias ping='prettyping --nolegend' || true
+command -v htop >/dev/null 2>&1 && alias top='htop' || true
+command -v ncdu >/dev/null 2>&1 && alias du='ncdu --color dark -x' || true
+
+# Directory stack
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
