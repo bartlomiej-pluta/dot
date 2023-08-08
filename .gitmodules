@@ -1,12 +1,12 @@
 [submodule ".config/zsh/plugins/zsh-autosuggestions"]
-	path = .config/zsh/plugins/zsh-autosuggestions
+	path = .local/config/zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule ".config/zsh/plugins/zsh-syntax-highlighting"]
-	path = .config/zsh/plugins/zsh-syntax-highlighting
+	path = .local/config/zsh/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule ".config/zsh/plugins/bd"]
-	path = .config/zsh/plugins/bd
+	path = .local/config/zsh/plugins/bd
 	url = https://github.com/Tarrasch/zsh-bd.git
 [submodule ".config/zsh/plugins/sd"]
-	path = .config/zsh/plugins/sd
+	path = .local/config/zsh/plugins/sd
 	url = https://github.com/ianthehenry/sd.git
